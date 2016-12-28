@@ -1,0 +1,7 @@
+{
+    "events" : {
+        "type" : "database",
+        "table" : "events",
+        "primaryKey" : "id"
+    }
+}

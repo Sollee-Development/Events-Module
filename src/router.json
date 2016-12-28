@@ -1,0 +1,21 @@
+{
+    "conditions" : {
+        "default" : "calendar",
+        "calendar" : ["(\\d{4})", "(1[0-2]|\\d)"]
+    },
+    "routes" : {
+        "GET" : {
+            "calendar" : {
+                "model" : {
+                    "instanceOf" : "Events\\Model\\Lists",
+                    "substitutions" : { "Maphper\\Maphper" : { "instance" : ["MaphperLoader\\Loader", "getMaphper"], "params" : ["events"]}}
+                },
+                "controller" : { "instanceOf" : ["MVC\\Controller\\Filter"]},
+                "view" : {
+                    "instanceOf" : "Transphporm\\Builder",
+                    "constructParams" : ["Layouts/layout.xml", "{dir}/view/calendar.tss"]
+                }
+            }
+        }
+    }
+}

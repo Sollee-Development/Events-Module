@@ -1,0 +1,53 @@
+<div id="calendar-title" class="row">
+    <div class="five columns">
+        <h2 class="title">November 2015</h2>
+        <a class='button' data-user="all" href='events/create'>Create Event <i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+    </div><!-- style="padding-right: 30px; float: left; margin: 0.5ex 0;" -->
+    <form class="controls calendar seven columns" method="get">
+        <select name="month" id="month">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+        <select name="year" id="year">
+          <option value="2015">2015</option>
+        </select>
+        <input name="submit" type="submit" value="Go" />
+        <br />
+        <a href="events/" class="previous">&lt;&lt; Previous Month</a> | <a href="events/" class="next">Next Month &gt;&gt;</a>
+    </form>
+</div>
+<div style="overflow-x: auto;" class="row">
+<table class="calendar u-full-width">
+  <thead >
+    <tr class="calendar-row">
+      <th class="calendar-day-head">Sunday</th>
+      <th class="calendar-day-head">Monday</th>
+      <th class="calendar-day-head">Tuesday</th>
+      <th class="calendar-day-head">Wednesday</th>
+      <th class="calendar-day-head">Thursday</th>
+      <th class="calendar-day-head">Friday</th>
+      <th class="calendar-day-head">Saturday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="calendar-row">
+      <td class="calendar-day">
+        <div class="day-number">1</div>
+        <div class="event">
+          <a href="events/5">Event 5</a><!-- &#160; -->
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

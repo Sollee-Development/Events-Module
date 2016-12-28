@@ -1,0 +1,16 @@
+main { content: template("delete.xml"); }
+
+html:attr(data-user) { content: "all"; }
+
+head title, #pageTitle { content: "Delete Event"; }
+
+input[name="event_id"]:attr(value) { content: data(model.data.event_id); }
+
+form:attr(action) { content: attr(action) + data(model.data.event_id); }
+
+html:header[location]:data[model.successful] { content: "events"; }
+html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "events/delete/" + data(model.data.event_id); }
+html:message[event/delete]:data[model.successful=true] { message: "The event was deleted"; }
+html:message[event/delete]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem deleting the event", "error"; }
+
+@import '../../../../Layouts/layout.tss';

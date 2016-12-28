@@ -1,0 +1,8 @@
+{
+    "dice": "validation_config.json",
+    "maphper" : "maphper.json",
+    "resources" : {
+        "css" : ["custom.css"],
+        "js" : ["view/form/eventForm.js"]
+    }
+}

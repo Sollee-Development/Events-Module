@@ -1,0 +1,7 @@
+<form method="POST" action="events/delete/">
+    <h2>Are you sure you want to delete the event?</h2>
+    <input type="hidden" name="event_id" />
+    <div class="row">
+        <button type="submit" class="button-primary">Delete</button>
+    </div>
+</form>

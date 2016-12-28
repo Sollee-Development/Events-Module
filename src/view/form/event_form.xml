@@ -1,0 +1,42 @@
+<script>$(onReady.form.event)</script>
+<form method="POST" action="events/">
+    <div class="row">
+        <h2 id="form-title"> Event</h2>
+    </div>
+    <input type="hidden" name="event_id" />
+    <div class="row">
+        <div class="four columns">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="u-full-width" required="required"/>
+        </div>
+        <div class="four columns">
+            <label for="email">Location</label>
+            <textarea name="location" class="u-full-width"></textarea>
+        </div>
+        <div class="four columns">
+            <label for="email">Description</label>
+            <textarea name="description" class="u-full-width"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="three columns">
+            <label for="start_date">Start Date</label>
+            <input type="text" name="start_date" class="u-full-width" required="required"/>
+        </div>
+        <div class="three columns">
+            <label for="start_time">Start Time</label>
+            <input type="text" name="start_time" class="u-full-width timepicker" required="required"/>
+        </div>
+        <div class="three columns">
+            <label for="end_date">End Date</label>
+            <input type="text" name="end_date" class="u-full-width" required="required" />
+        </div>
+        <div class="three columns">
+            <label for="end_time">End Time</label>
+            <input type="text" name="end_time" class="u-full-width timepicker" required="required" />
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="button-primary">Save</button>
+    </div>
+</form>

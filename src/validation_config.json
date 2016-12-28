@@ -1,0 +1,77 @@
+{
+    "Events\\Model\\Event" : {
+        "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+    },
+    "$events_validate_id" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\IntVal"}
+        ]]]]
+    },
+    "$events_validate_name" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\Alnum"},
+            {"instance" : "Respect\\Validation\\Rules\\Length", "params" : [1, 50]},
+            {"instance" : "Respect\\Validation\\Rules\\NotEmpty"}
+        ]]]]
+    },
+    "$events_validate_location" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\Alnum", "params" : ["\n"]},
+            {"instance" : "Respect\\Validation\\Rules\\Length", "params" : [1, 300]}
+        ]]]]
+    },
+    "$events_validate_description" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+
+        ]]]]
+    },
+    "$events_validate_date" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\Date"}
+        ]]]]
+    },
+    "$events_validate_date_or1" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\OneOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["end_date", "min", "start_date"]},
+            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]}
+        ]]]]
+    },
+    "$events_validate_date_or2" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\OneOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "max", "end_date"]},
+            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]}
+        ]]]]
+    },
+    "$events_validate_time" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\Date", "params" : ["H:i"]}
+        ]]]]
+    },
+    "$events_validate_event" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "call" : [["addRules", [[
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["id", {"instance" : "$events_validate_id"}, false]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["name", {"instance" : "$events_validate_name"}]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
+                ["location", {"instance" : "Respect\\Validation\\Rules\\Optional",
+                    "params" : [{"instance" : "$events_validate_location"}]}, false]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
+                ["description", {"instance" : "Respect\\Validation\\Rules\\Optional",
+                    "params" : [{"instance" : "$events_validate_description"}]}, false]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_date", {"instance" : "$events_validate_date"}]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_date", {"instance" : "$events_validate_date"}]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_time", {"instance" : "$events_validate_time"}]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_time", {"instance" : "$events_validate_time"}]},
+            {"instance" : "$events_validate_date_or1" },
+            {"instance" : "$events_validate_date_or2" }
+        ]]]]
+    }
+}

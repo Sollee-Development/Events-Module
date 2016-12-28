@@ -1,0 +1,16 @@
+main { content: template("event_form.xml"); }
+
+html:attr(data-user) { content: "all"; }
+
+head title, #pageTitle { content: "Create Event"; }
+
+#form-title:before { content: "Create"; }
+
+form:attr(action) { content: attr(action) + "create"; }
+
+html:header[location]:data[model.successful] { content: "events"; }
+html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "events/create"; }
+html:message[event/create]:data[model.successful=true] { message: "The event was created"; }
+html:message[event/create]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem creating the event", "error"; }
+
+@import '../../../../Layouts/layout.tss';

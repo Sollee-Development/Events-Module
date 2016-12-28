@@ -1,0 +1,40 @@
+html:header[location]:data[request.get("month")] { content: "events/" + data(request.get("year")) + "/" + data(request.get("month")); }
+
+main { content: template('calendar.xml'); bind: data(model.getData()); }
+
+head title, #pageTitle { content: "Events"; }
+
+#calendar-title { bind: data(cal_links); }
+#calendar-title h2 { content: data(datetime); format: date "F Y"; }
+
+#year option { repeat: data(year_select); content: iteration(); }
+#year option:attr(value) { content: iteration(); }
+
+#year option:[iteration()=data(year)]:attr(selected) { content: 'selected'; }
+
+#calendar-title #month option[value=data(month)]:attr(selected) { content: 'selected'; }
+
+#calendar-title .controls a:nth-child(1):attr(href) { content: attr(href), data(previous); }
+#calendar-title .controls a:nth-child(2):attr(href) { content: attr(href), data(next); }
+
+table.calendar { bind: data(calendar); }
+table.calendar tbody tr { repeat: data(); }
+
+table.calendar tbody tr td { repeat: iteration(); }
+
+table.calendar tbody tr td div.day-number { content: iteration(day_number); }
+
+table.calendar tbody tr td div.event { repeat: iteration(events); }
+
+table.calendar tbody tr td div.event:iteration[event_id=false] { content: "<span>&#160;</span>"; format: html; }
+table.calendar tbody tr td div.event:iteration[event_id=false]:attr(class) { content: ''; }
+
+table.calendar tbody tr td div.event:attr(class):after { content: "event ", iteration(day_type); }
+table.calendar tbody tr td div.event.middle-day a { content: "<span>&#160;</span>"; format: html; }
+table.calendar tbody tr td div.event.last-day a { content: "<span>&#160;</span>"; format: html; }
+
+table.calendar tbody tr td div.event a:attr(href) { content: "events/", iteration(event_id); }
+
+table.calendar tbody tr td div.event a { content: iteration(name); }
+
+@import '../../../Layouts/layout.tss';

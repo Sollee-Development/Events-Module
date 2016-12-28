@@ -1,0 +1,13 @@
+.event [data-user="all"] a:attr(href) { content: attr(href) + data(event_id); }
+
+.time { content: data(start_date) + ' ' + data(start_time); format: date "l F jS, Y g:i A - "; }
+
+.event .time:after:data[start_date=data(end_date)] { content: data(end_date) + ' ' + data(end_time); format: date "g:i A"; }
+.event .time:after:data[start_date!=data(end_date)] { content: data(end_date) + ' ' + data(end_time); format: date "l F jS, Y g:i A"; }
+
+.event .name { content: data(name); }
+.event .description:data[description=false] { display: none; }
+.event .address-text { content: data(description); format: nl2br; }
+
+.event .location:data[location=false] { display: none; }
+.event .location span { content: data(location); }

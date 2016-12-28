@@ -1,0 +1,10 @@
+main { content: template('event.xml', '.event'); }
+
+head title, #pageTitle { content: "Event"; }
+
+.event { bind: data(model.getData()); }
+.event h3.name { display: none; }
+
+@import "event.tss";
+
+@import '../../../Layouts/layout.tss';

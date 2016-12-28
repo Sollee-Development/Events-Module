@@ -1,0 +1,23 @@
+﻿<div class="event">
+    <h2 class="name">Event Title</h2>
+    <h3 class="name">Event Title</h3>
+    <div data-user="all">
+        <a href="events/edit/" title="Edit Event" class="button icon-button">
+            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+        </a>
+        <a href="events/delete/" title="Delete Event" class="button icon-button">
+            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div>Date: <span class="time"></span></div>
+    <div class="location">Location: <span></span></div><br /><!--
+    <div class="admin">
+        <a class="button" href="events/edit/">Edit Event</a>
+        <a class="button" href="events/delete/">Delete Event</a>
+        <br />
+    </div>-->
+    <div class="description">
+        <div>Description:</div>
+        <div class="address-text">1111 Fake Rd.</div>
+    </div>
+</div>
