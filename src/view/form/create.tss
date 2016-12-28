@@ -10,7 +10,7 @@ form:attr(action) { content: attr(action) + "create"; }
 
 html:header[location]:data[model.successful] { content: "events"; }
 html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "events/create"; }
-html:message[event/create]:data[model.successful=true] { message: "The event was created"; }
-html:message[event/create]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem creating the event", "error"; }
+html:message["event/create"]:data[model.successful=true] { message: "The event was created"; }
+html:message["event/create"]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem creating the event", "error"; }
 
 @import '../../../../Layouts/layout.tss';

@@ -38,11 +38,7 @@ class RouterRule implements \Level2\Router\Rule {
 
         } elseif ($route[1] == "create") {
             $this->dice->addRule('$model', [
-                "instanceOf" => "MVC\\Model\\Form\\Save",
-                "constructParams" => [
-                    ["instance" => ["MaphperLoader\\Json", "getMaphper"], "params" => ["events"]],
-                    ["instance" => '$events_validate_event']
-                ]
+                "instanceOf" => "Events\\Model\\Form"
             ]);
             $model = $this->dice->create('$model');
             $controller = $this->dice->create('MVC\\Controller\\Form', [], [$model]);
@@ -58,11 +54,7 @@ class RouterRule implements \Level2\Router\Rule {
         } elseif ($route[1] == "edit" && isset($route[2]) && is_numeric($route[2])) {
 
             $this->dice->addRule('$model', [
-                "instanceOf" => "MVC\\Model\\Form\\Save",
-                "constructParams" => [
-                    ["instance" => ["MaphperLoader\\Json", "getMaphper"], "params" => ["events"]],
-                    ["instance" => '$events_validate_event']
-                ]
+                "instanceOf" => "Events\\Model\\Form"
             ]);
             $model = $this->dice->create('$model');
             $controller = $this->dice->create('MVC\\Controller\\Form', [], [$model]);
@@ -74,7 +66,6 @@ class RouterRule implements \Level2\Router\Rule {
             else {
                 $controller->main([$route[2]]);
             }
-
         } elseif ($route[1] == "delete" && isset($route[2]) && is_numeric($route[2])) {
 
             $this->dice->addRule('$model', [
@@ -91,7 +82,7 @@ class RouterRule implements \Level2\Router\Rule {
                 $controller->submit();
             }
             else {
-                $controller->main([$route[2]]);
+                $controller->main($route[2]);
             }
 
         } else { // If it is an event
@@ -99,15 +90,18 @@ class RouterRule implements \Level2\Router\Rule {
                 $view = $this->dice->create('Transphporm\\Builder', ["Layouts/layout.xml", "html:header[location] { content: '../events'; }"]);
                 return new \Level2\Router\Route(null, $view, null, getcwd());
             }
-            $this->dice->addRule('$model', [
+            $this->dice->addRule('$id_model', [
                 'instanceOf' => 'MVC\\Model\\Id',
                 'substitutions' => ['Maphper\\Maphper' => ['instance' => ['MaphperLoader\\Json', 'getMaphper'], 'params' => ['events']]]
+            ]);
+            $this->dice->addRule('$model', [
+                'instanceOf' => 'Events\\Model\\Event',
+                'substitutions' => ['MVC\\Model\\Id' => ['instance' => "\$id_model"]]
             ]);
             $model = $this->dice->create('$model');
             $controller = $this->dice->create('MVC\\Controller\\Id', [], [$model]);
             $view = $this->dice->create('Transphporm\\Builder', ["Layouts/layout.xml", "Modules/events/view/view_event.tss"]);
             $controller->id($route[1]);
-            //return false; // return false until this is added
         }
 
         $route = new \Level2\Router\Route($model, $view, $controller, getcwd());

@@ -2,6 +2,20 @@
     "events" : {
         "type" : "database",
         "table" : "events",
+        "primaryKey" : "id",
+        "relations" : [
+            {
+                "name" : "repeat",
+                "to" : "repeat_events",
+                "type" : "one",
+                "localKey" : "repeat_id",
+                "foreignKey" : "id"
+            }
+        ]
+    },
+    "repeat_events" : {
+        "type" : "database",
+        "table" : "repeat_events",
         "primaryKey" : "id"
     }
 }

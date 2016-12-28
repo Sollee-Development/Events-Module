@@ -16,13 +16,22 @@ onReady.form.event = function () {
         }
     });
     $(".timepicker").timepicker({
-        timeFormat: 'H:mm',
-        interval: 15
+        timeFormat: 'g:i A',
+        step: 15
     });
     $("form").validate({
         rules: {
             start_date: "dateISO",
-            end_date: "dateISO"
+            end_date: "dateISO",
+            "repeat[interval_num]" : {
+                step: 1,
+                digits: true
+            }
         }
+    });
+    if (!$("[name=recurring]").is(":checked")) $('.recurringSetting').hide();
+    $('[name=recurring]').change(function() {
+        if ($(this).is(":checked")) $('.recurringSetting').show();
+        else $('.recurringSetting').hide();
     });
 };

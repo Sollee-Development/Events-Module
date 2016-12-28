@@ -1,0 +1,39 @@
+/******** CALENDAR code ********/
+#calendar-title form, #calendar-title div:nth-child(1) {
+  text-align: center; }
+
+table.calendar th.calendar-day-head {
+  width: 14%;
+  min-width: 8rem; }
+table.calendar td {
+  padding-right: 0;
+  padding-left: 0;
+  vertical-align: top; }
+table.calendar td.calendar-day div.day-number {
+  font-weight: 500;
+  padding-left: 15px; }
+table.calendar .event {
+  background-color: #4F2980;
+  color: white; }
+table.calendar .event a {
+  color: white;
+  display: inline-block;
+  width: 100%; }
+table.calendar div.first-day {
+  margin-left: 15px; }
+table.calendar div.last-day {
+  margin-right: 15px; }
+table.calendar div.single-day {
+  margin: 0 15px; }
+table.calendar div:not(.first-day):not(.single-day) {
+  padding-left: 0; }
+  table.calendar div:not(.first-day):not(.single-day) a {
+    text-decoration: none;
+    padding-left: 0; }
+table.calendar td.calendar-day div {
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 0;
+  margin-bottom: 3px; }
+
+/*# sourceMappingURL=custom.css.map */

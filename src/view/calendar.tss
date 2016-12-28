@@ -1,4 +1,4 @@
-html:header[location]:data[request.get("month")] { content: "events/" + data(request.get("year")) + "/" + data(request.get("month")); }
+html:header[location]:data[request.get("month")=true] { content: "events/" + data(request.get("year")) + "/" + data(request.get("month")); }
 
 main { content: template('calendar.xml'); bind: data(model.getData()); }
 

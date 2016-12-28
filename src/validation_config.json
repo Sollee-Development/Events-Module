@@ -1,6 +1,34 @@
 {
-    "Events\\Model\\Event" : {
+    "Events\\Model\\SingleEvents" : {
         "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+    },
+    "Events\\Model\\RepeatingEvents" : {
+        "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+    },
+    "Recurr\\Transformer\\TextTransformer" : {
+        "substitutions" : {
+            "Recurr\\Transformer\\TranslatorInterface" : { "instance" : "Recurr\\Transformer\\Translator", "params" : ["en"]}
+        }
+    },
+    "Events\\Model\\Form" : {
+        "constructParams" : [
+            {"instance" : "$event_saver"},
+            {"instance" : "$event_repeat_saver"}
+        ]
+    },
+    "$event_saver" : {
+        "instanceOf" : "MVC\\Model\\Form\\Save",
+        "constructParams" : [
+            {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]},
+            {"instance" : "$events_validate_event"}
+        ]
+    },
+    "$event_repeat_saver" : {
+        "instanceOf" : "MVC\\Model\\Form\\Save",
+        "constructParams" : [
+            {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["repeat_events"]},
+            {"instance" : "$events_validate_repeat"}
+        ]
     },
     "$events_validate_id" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
@@ -62,16 +90,29 @@
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["name", {"instance" : "$events_validate_name"}]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
                 ["location", {"instance" : "Respect\\Validation\\Rules\\Optional",
-                    "params" : [{"instance" : "$events_validate_location"}]}, false]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
-                ["description", {"instance" : "Respect\\Validation\\Rules\\Optional",
                     "params" : [{"instance" : "$events_validate_description"}]}, false]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_date", {"instance" : "$events_validate_date"}]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_date", {"instance" : "$events_validate_date"}]},
+            {"instance" : "Respect\\Validation\\Rules\\When", "params" : [
+                {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"instance" : "$events_validate_id"}]},
+                {"instance" : "Respect\\Validation\\Rules\\AlwaysValid" },
+                {"instance" : "Respect\\Validation\\Rules\\AllOf", "params" : [
+                    {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_date", {"instance" : "$events_validate_date"}]},
+                    {"instance" : "$events_validate_date_or1" },
+                    {"instance" : "$events_validate_date_or2" }
+                ]}
+            ]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_time", {"instance" : "$events_validate_time"}]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_time", {"instance" : "$events_validate_time"}]},
-            {"instance" : "$events_validate_date_or1" },
-            {"instance" : "$events_validate_date_or2" }
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"instance" : "$events_validate_id"}, false]}
         ]]]]
+    },
+    "$events_validate_repeat" : {
+        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
+        "constructParams" : [
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["freq",
+                {"instance" : "Respect\\Validation\\Rules\\In", "params" : [["weekly"]]}
+            ]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["interval_num", {"instance" : "$events_validate_id"}]}
+        ]
     }
 }

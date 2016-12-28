@@ -1,45 +1,31 @@
 <?php
-
 namespace Events\Model;
+class Event implements \MVC\Model\Idable {
+    private $data;
+    private $transformer;
+    private $rule;
 
-class Event {
-    private $maphper;
-
-    public function __construct(\Maphper\Maphper $maphper) {
-        $this->maphper = $maphper;
+    public function __construct(\MVC\Model\Id $data, \Recurr\Transformer\TextTransformer $transformer, \Recurr\Rule $rule) {
+        $this->data = $data;
+        $this->transformer = $transformer;
+        $this->rule = $rule;
     }
 
-    public function get_events($year, $month) {
-       $start = new \DateTime($year . '-' . $month, new \DateTimeZone('America/New_York'));
-       $end = new \DateTime($year. '-' . $month, new \DateTimeZone('America/New_York'));
-       $end->add(new \DateInterval('P1M'));
-       $end->sub(new \DateInterval('P1D'));
-
-       $start = $start->format('Y-m-d');
-       $end = $end->format('Y-m-d');
-
-       return $this->maphper->filter([
-          \Maphper\Maphper::FIND_OR => [
-              \Maphper\Maphper::FIND_OR => [
-                  \Maphper\Maphper::FIND_BETWEEN => [
-                      'start_date' => [$start, $end]
-                  ],
-                  \Maphper\Maphper::FIND_BETWEEN => [
-                      'end_date' => [$start, $end]
-                  ]
-              ]
-          ]
-       ])->sort('start_date asc');
+    public function setId($id) {
+        $this->data->setId($id);
     }
 
-    public function getUpcomingEvents() {
-        return $this->maphper->filter([
-            \Maphper\Maphper::FIND_OR => [
-                \Maphper\Maphper::FIND_GREATER => [
-                    'start_date' => (new \DateTime())->setTime(0, 0)
-                ],
-                'start_date' => (new \DateTime())->setTime(0, 0)
-            ]
-        ])->sort('start_date asc');
+    public function getData() {
+        return $this->data->getData();
+    }
+
+    public function getRepeatText() {
+        $event = $this->data->getData();
+        $repeatSettings = $event->repeat;
+        if ($event->end_date) $this->rule->setUntil(new \DateTime($event->end_date));
+        $this->rule->setStartDate(new \DateTime($event->start_date))
+            ->setFreq(strtoupper($repeatSettings->freq))->setInterval($repeatSettings->interval_num);
+            
+        return $this->transformer->transform($this->rule);
     }
 }

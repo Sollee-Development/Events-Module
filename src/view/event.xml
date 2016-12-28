@@ -9,15 +9,15 @@
             <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
         </a>
     </div>
-    <div>Date: <span class="time"></span></div>
-    <div class="location">Location: <span></span></div><br /><!--
+    <div class="date"><strong>Date: </strong><span class="time"></span></div><!--
     <div class="admin">
         <a class="button" href="events/edit/">Edit Event</a>
         <a class="button" href="events/delete/">Delete Event</a>
         <br />
     </div>-->
-    <div class="description">
-        <div>Description:</div>
+    <div class="address">
+        <div><strong>Address:</strong></div>
         <div class="address-text">1111 Fake Rd.</div>
     </div>
+    <p class="dj"><strong>DJ: </strong><span>Not Real</span></p>
 </div>

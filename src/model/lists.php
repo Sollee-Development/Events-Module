@@ -9,7 +9,7 @@ class Lists implements \MVC\Model\Filterable {
 
     const DAY_START_TIME = '7:00 AM';
 
-	public function __construct(Event $model) {
+	public function __construct(Events $model) {
 		$this->model = $model;
 	}
 
