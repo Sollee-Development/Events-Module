@@ -1,54 +1,53 @@
 /******** CALENDAR code ********/
-#calendar-title form, #calendar-title div:nth-child(1) {
-    text-align: center;
-}
 
 $event-bg-color: #4F2980;
 
-table.calendar {
-    th.calendar-day-head {
+.c-calendar__container {
+    overflow-x: auto;
+}
+.c-calendar__title form, .c-calendar__title div:nth-child(1) {
+    text-align: center;
+}
+    .calendar__day-head {
         width: 14%;
         min-width: 8rem;
     }
-    td {
+    .c-calendar__day {
         padding-right: 0;
         padding-left: 0;
         vertical-align: top;
     }
-    td.calendar-day div.day-number {
-        font-weight: 500;
-        padding-left: 15px;
-    }
-    .event {
-        background-color: $event-bg-color;
-        color: white;
-    }
-    .event a {
-        color: white;
-        display: inline-block;
-        width: 100%;
-    }
-    div.first-day {
-        margin-left: 15px;
-    }
-    div.last-day {
-        margin-right: 15px;
-    }
-    div.single-day {
-        margin: 0 15px;
-    }
-    div:not(.first-day):not(.single-day) {
-        padding-left: 0;
-
-        a {
-            text-decoration: none;
-            padding-left: 0;
+        .c-calendar__day-number {
+            font-weight: 500;
+            padding-left: 15px;
         }
-    }
-    td.calendar-day div {
-        padding: 2px;
-        padding-left: 4px;
-        padding-right: 0;
-        margin-bottom: 3px;
-    }
-}
+        .c-calendar__event { // Turn this into mixin
+            background-color: $event-bg-color;
+            color: white;
+            padding:  {
+                top: 2px;
+                bottom: 2px;
+                left: 0;
+                right: 0;
+            }
+            margin-bottom: 3px;
+
+            a {
+                color: white;
+                display: inline-block;
+                width: 100%;
+            }
+        }
+        .c-calendar__event--first {
+            margin-left: 15px;
+            padding-left: 4px;
+        }
+        .c-calendar__event--last {
+            margin-right: 15px;
+        }
+        .c-calendar__event:not(.c-calendar__event--first) {
+            a {
+                text-decoration: none;
+                padding-left: 0;
+            }
+        }

@@ -4,37 +4,47 @@ main { content: template('calendar.xml'); bind: data(model.getData()); }
 
 head title, #pageTitle { content: "Events"; }
 
-#calendar-title { bind: data(cal_links); }
-#calendar-title h2 { content: data(datetime); format: date "F Y"; }
+/******* Calendar Header ********/
+.c-calendar__title h2 { content: data(date); format: date "F Y"; }
 
-#year option { repeat: data(year_select); content: iteration(); }
-#year option:attr(value) { content: iteration(); }
+.c-calendar__title select[name="year"] option {
+    bind: data(date.format("Y"));
+    // Range is from 3 years back to 3 years ahead
+    repeat: data()-3, data()+3, for;
+    content: iteration();
+}
+.c-calendar__title select[name="year"] option:attr(value) {
+    content: iteration(); }
+.c-calendar__title select[name="year"] option:[iteration()=data(date.format("Y"))]:attr(selected) {
+    content: 'selected'; }
 
-#year option:[iteration()=data(year)]:attr(selected) { content: 'selected'; }
+.c-calendar__title select[name="month"] option[value=data(date.format("n"))]:attr(selected) {
+    content: 'selected'; }
 
-#calendar-title #month option[value=data(month)]:attr(selected) { content: 'selected'; }
+.c-calendar__controls a:nth-child(1):attr(href) { content: attr(href), data(date).modify('-1 month').format("Y/n"); }
+.c-calendar__controls a:nth-child(2):attr(href) { content: attr(href), data(date).modify('+1 month').format("Y/n"); }
 
-#calendar-title .controls a:nth-child(1):attr(href) { content: attr(href), data(previous); }
-#calendar-title .controls a:nth-child(2):attr(href) { content: attr(href), data(next); }
+/********** Calendar Body ***********/
+.c-calendar__table { bind: data(calendar); }
+.c-calendar__row { repeat: data(); }
 
-table.calendar { bind: data(calendar); }
-table.calendar tbody tr { repeat: data(); }
+.c-calendar__day { repeat: iteration(); }
 
-table.calendar tbody tr td { repeat: iteration(); }
+.c-calendar__day-number { content: iteration(day_number); }
 
-table.calendar tbody tr td div.day-number { content: iteration(day_number); }
+.c-calendar__event { repeat: iteration(events); }
 
-table.calendar tbody tr td div.event { repeat: iteration(events); }
+.c-calendar__event:iteration[event_id=false] { content: "<span>&#160;</span>"; format: html; }
+.c-calendar__event:iteration[event_id=false]:attr(class) { content: ''; }
 
-table.calendar tbody tr td div.event:iteration[event_id=false] { content: "<span>&#160;</span>"; format: html; }
-table.calendar tbody tr td div.event:iteration[event_id=false]:attr(class) { content: ''; }
+.c-calendar__event:iteration[day_type]:attr(class) { content: attr(class) + " c-calendar__event--" + iteration(day_type); }
+.c-calendar__event:iteration[start_date=iteration(end_date)]:attr(class) {
+    content: attr(class) + " c-calendar__event--last";
+}
+.c-calendar__event a:not(".c-calendar__event--first a") { content: "<span>&#160;</span>"; format: html; }
 
-table.calendar tbody tr td div.event:attr(class):after { content: "event ", iteration(day_type); }
-table.calendar tbody tr td div.event.middle-day a { content: "<span>&#160;</span>"; format: html; }
-table.calendar tbody tr td div.event.last-day a { content: "<span>&#160;</span>"; format: html; }
+.c-calendar__event a:attr(href) { content: "events/", iteration(id); }
 
-table.calendar tbody tr td div.event a:attr(href) { content: "events/", iteration(event_id); }
+.c-calendar__event.c-calendar__event--first a { content: iteration(name); }
 
-table.calendar tbody tr td div.event a { content: iteration(name); }
-
-@import '../../../Layouts/layout.tss';
+@import '/Layouts/layout.tss';
