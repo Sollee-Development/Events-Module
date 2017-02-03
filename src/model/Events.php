@@ -2,26 +2,36 @@
 
 namespace Events\Model;
 
-class Events {
-    private $single;
-    private $repeating;
+class Events implements EventsStorage {
+    private $eventsStorage;
 
-    public function __construct(SingleEvents $single, RepeatingEvents $repeating) {
-        $this->single = $single;
-        $this->repeating = $repeating;
+    public function __construct(EventsStorage ...$eventsStorage) {
+        $this->eventsStorage = $eventsStorage;
     }
 
-    public function get_events($year, $month) {
-        $single_events = $this->single->getEvents($year, $month);
-
+    public function getEvents($year, $month): \Iterator {
         $events = new \AppendIterator();
-        $events->append($single_events);
-        $events->append($this->repeating->getEvents($year, $month)->getIterator());
+        foreach ($this->eventsStorage as $event)
+            $events->append($event->getEvents($year, $month));
 
         return $events;
    }
 
-    public function getUpcomingEvents() {
-        return $this->single->getUpcomingEvents();
+    public function getUpcomingEvents($num): \Iterator {
+        $events = new \AppendIterator();
+        
+        foreach ($this->eventsStorage as $event)
+            $events->append($event->getUpcomingEvents($num));
+
+        $events = iterator_to_array($events, false);
+
+        usort($events, function ($event1, $event2) {
+            $date1 = new \DateTime($event1->start_date);
+            $date2 = new \DateTime($event2->start_date);
+            if ($date1 === $date2) return 0;
+            else return ($date1 < $date2) ? -1 : 1;
+        });
+
+        return new \ArrayIterator(array_slice($events, 0, $num));
     }
 }

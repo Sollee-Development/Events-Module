@@ -1,6 +1,6 @@
 <?php
 namespace Events\Model;
-class SingleEvents {
+class SingleEvents implements EventsStorage {
     private $mapper;
     private $when;
 
@@ -8,7 +8,7 @@ class SingleEvents {
         $this->mapper = $mapper;
     }
 
-    public function getEvents($year, $month) {
+    public function getEvents($year, $month): \Iterator {
         $start = new \DateTime($year . '-' . $month, new \DateTimeZone('America/New_York'));
         $end = new \DateTime($year. '-' . $month, new \DateTimeZone('America/New_York'));
         $end->add(new \DateInterval('P1M'));
@@ -19,19 +19,17 @@ class SingleEvents {
 
         $single_events = $this->mapper->filter([
             'repeat_id' => null,
-                 \Maphper\Maphper::FIND_OR => [
-                     \Maphper\Maphper::FIND_BETWEEN => [
-                         'start_date' => [$start, $end],
-                         'end_date' => [$start, $end]
-                    ]
-                 ]
-             
+             \Maphper\Maphper::FIND_OR => [
+                 \Maphper\Maphper::FIND_BETWEEN => [
+                     'start_date' => [$start, $end]
+                ]
+             ]
          ])->sort('start_date asc');
 
          return $single_events;
     }
 
-    public function getUpcomingEvents() {
+    public function getUpcomingEvents($num): \Iterator {
         return $this->mapper->filter([
             \Maphper\Maphper::FIND_OR => [
                 \Maphper\Maphper::FIND_GREATER => [
@@ -39,6 +37,6 @@ class SingleEvents {
                 ],
                 'start_date' => (new \DateTime())->setTime(0, 0)
             ]
-        ])->sort('start_date asc');
+        ])->sort('start_date asc')->limit($num);
     }
 }
