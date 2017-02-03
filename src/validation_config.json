@@ -5,6 +5,17 @@
     "Events\\Model\\RepeatingEvents" : {
         "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
     },
+    "Events\\Model\\Events" : {
+        "constructParams" : [
+            {"instance" : "Events\\Model\\SingleEvents"},
+            {"instance" : "Events\\Model\\RepeatingEvents"}
+        ]
+    },
+    "Events\\Model\\Calendar" : {
+        "substitutions" : {
+            "Events\\Model\\EventsStorage" : {"instance" : "Events\\Model\\Events"}
+        }
+    },
     "Recurr\\Transformer\\TextTransformer" : {
         "substitutions" : {
             "Recurr\\Transformer\\TranslatorInterface" : { "instance" : "Recurr\\Transformer\\Translator", "params" : ["en"]}

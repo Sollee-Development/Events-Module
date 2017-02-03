@@ -22,7 +22,7 @@ class RouterRule implements \Level2\Router\Rule {
 
         if (!empty($route[2]) && ($route[1] !== "edit" && $route[1] !== "delete")) { // If it is a calendar
             $this->dice->addRule('$model', [
-                'instanceOf' => 'Events\\Model\\Lists',
+                'instanceOf' => 'Events\\Model\Calendar',
                 'substitutions' => ['Maphper\\Maphper' => ['instance' => ['MaphperLoader\\Json', 'getMaphper'], 'params' => ['events']]]
             ]);
             $model = $this->dice->create('$model');

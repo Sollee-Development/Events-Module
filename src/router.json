@@ -7,7 +7,7 @@
         "GET" : {
             "calendar" : {
                 "model" : {
-                    "instanceOf" : "Events\\Model\\Lists",
+                    "instanceOf" : "Events\\Model\\Calendar",
                     "substitutions" : { "Maphper\\Maphper" : { "instance" : ["MaphperLoader\\Loader", "getMaphper"], "params" : ["events"]}}
                 },
                 "controller" : { "instanceOf" : ["MVC\\Controller\\Filter"]},
