@@ -8,8 +8,5 @@
 .event .date:data[repeat_id=true] { content: "Repeats " + root(model.getRepeatText()); }
 
 .event .name { content: data(name); }
-.event .address:data[address=false] { display: none; }
-.event .address-text { content: data(address); format: nl2br; }
-
-.event .dj span { content: data(dj.name); }
-.event .dj span:data[dj_id=false] { content: 'There is no DJ assigned to this event'; }
+.event .description:data[description=false] { display: none; }
+.event .description-text { content: data(description); format: nl2br; }

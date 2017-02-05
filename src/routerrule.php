@@ -18,8 +18,6 @@ class RouterRule implements \Level2\Router\Rule {
         }
         if (isset($route[3])) return false;
 
-        //if (isset($_GET['month'])) header("Location: /elemukulek/events/{$_GET['year']}/{$_GET['month']}");
-
         if (!empty($route[2]) && ($route[1] !== "edit" && $route[1] !== "delete")) { // If it is a calendar
             $this->dice->addRule('$model', [
                 'instanceOf' => 'Events\\Model\Calendar',
@@ -109,4 +107,3 @@ class RouterRule implements \Level2\Router\Rule {
     }
 }
 //*/
-?>

@@ -5,105 +5,78 @@ class RepeatingEvents implements EventsStorage {
     private $rrule;
     private $transformer;
 
-    public function __construct(\Maphper\Maphper $mapper, \Recurr\Rule $rrule, \Recurr\Transformer\ArrayTransformer $transformer) {
+    public function __construct(\Maphper\Maphper $mapper, RRule $rrule, \Recurr\Transformer\ArrayTransformer $transformer) {
         $this->mapper = $mapper;
         $this->rrule = $rrule;
         $this->transformer = $transformer;
     }
 
-    public function getEvents($year, $month): \Iterator {
-        $start = new \DateTime($year . '-' . $month, new \DateTimeZone('America/New_York'));
-        $end = new \DateTime($year. '-' . $month, new \DateTimeZone('America/New_York'));
-        $end->add(new \DateInterval('P1M'));
-        $end->sub(new \DateInterval('P1D'));
+    private function getOccurrences($constraint, $rule, $event) {
+        $events = [];
+        foreach ($this->transformer->transform($rule, $constraint) as $occurrence) {
+            $day = $occurrence->getStart();
+            $dayString = $day->format('Y-m-d');
+            $event = clone $event;
+            $event->start_date = $dayString;
+            $event->end_date = $dayString;
+            $events[] = $event;
+        }
+        return $events;
+    }
 
-        $constraint = new \Recurr\Transformer\Constraint\BetweenConstraint($start, $end, true);
-
-        $repeatingEvents = $this->mapper->filter([
+    private function getRecurringFromDatabase($endAfter, $startBefore) {
+        return $this->mapper->filter([
            \Maphper\Maphper::FIND_NOT => [
                'repeat_id' => null
            ],
            \Maphper\Maphper::FIND_OR => [
                \Maphper\Maphper::FIND_LESS => [
-                   'start_date' => $end
+                   'start_date' => $startBefore
                ],
-               'start_date' => $end
+               'start_date' => $startBefore
            ],
            [
                \Maphper\Maphper::FIND_OR => [
                    \Maphper\Maphper::FIND_GREATER => [
-                       'end_date' => $start
+                       'end_date' => $endAfter
                    ],
                    'end_date' => null
                ]
            ]
         ]);
-
-        $events = new \ArrayObject();
-
-        foreach ($repeatingEvents as $event) {
-            $currentRule = $this->getRule($event);
-
-            foreach ($this->transformer->transform($currentRule, $constraint) as $occurrence) {
-                $day = $occurrence->getStart();
-                $dayString = $day->format('Y-m-d');
-                $event = clone $event;
-                $event->start_date = $dayString;
-                $event->end_date = $dayString;
-                $events[] = $event;
-            }
-        }
-
-       return $events->getIterator();
     }
 
-    private function getRule($event) {
-        $repeatSettings = $event->repeat;
-        $currentRule = clone $this->rrule;
+    public function getEvents($year, $month): \Iterator {
+        $start = new \DateTime($year . '-' . $month, new \DateTimeZone('America/New_York'));
+        $end = new \DateTime($year. '-' . $month, new \DateTimeZone('America/New_York'));
+        $end->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
 
-        if ($event->end_date) $currentRule->setUntil(new \DateTime($event->end_date));
-        $currentRule->setStartDate(new \DateTime($event->start_date))
-            ->setFreq(strtoupper($repeatSettings->freq))->setInterval($repeatSettings->interval_num);
+        $constraint = new \Recurr\Transformer\Constraint\BetweenConstraint($start, $end, true);
 
-        return $currentRule;
+
+        $repeatingEvents = $this->getRecurringFromDatabase($start, $end);
+        $events = [];
+
+        foreach ($repeatingEvents as $event) {
+            $currentRule = $this->rrule->getRule($event);
+            $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
+        }
+
+       return new \ArrayIterator($events);
     }
 
     public function getUpcomingEvents($num): \Iterator {
         $now = (new \DateTime())->setTime(0, 0);
-        $repeatingEvents = $this->mapper->filter([
-            \Maphper\Maphper::FIND_NOT => [
-               'repeat_id' => null
-            ],
-            \Maphper\Maphper::FIND_OR => [
-                \Maphper\Maphper::FIND_LESS => [
-                    'start_date' => $now
-                ],
-                'start_date' => $now
-            ],
-            [
-                \Maphper\Maphper::FIND_OR => [
-                    \Maphper\Maphper::FIND_GREATER => [
-                        'end_date' => $now
-                    ],
-                    'end_date' => null
-                ]
-            ]
-        ])->sort('start_date asc');
+        $constraint = new \Recurr\Transformer\Constraint\AfterConstraint($now, true);
+        $repeatingEvents = $this->getRecurringFromDatabase($now, $now);
 
         $events = [];
 
         foreach ($repeatingEvents as $event) {
-            $currentRule = $this->getRule($event);
-            if ($currentRule->getRule() > $num) $currentRule->setCount($num);
+            $currentRule = $this->rrule->getRule($event);
+            if ($currentRule->getCount() > $num) $currentRule->setCount($num);
 
-            foreach ($this->transformer->transform($currentRule) as $occurrence) {
-                $day = $occurrence->getStart();
-                $dayString = $day->format('Y-m-d');
-                $event = clone $event;
-                $event->start_date = $dayString;
-                $event->end_date = $dayString;
-                $events[] = $event;
-            }
+            $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
         }
 
         usort($events, function ($event1, $event2) {
