@@ -27,10 +27,10 @@ class Form implements \MVC\Model\Form {
         }
         if (isset($data["recurring"]) && $data["recurring"] === "true") { // If it is a recurring event
             $repeatData = $data["repeat"];
-            $this->repeatSaver->submit($repeatData);
-            $data["repeat_id"] = $this->repeatSaver->data->id;
+            //$this->repeatSaver->submit($repeatData);
+            //$data["repeat_id"] = $this->repeatSaver->data->id;
         }
-        unset($data["repeat"]);
+        //unset($data["repeat"]);
         unset($data["recurring"]);
         if (empty($data["end_date"])) $data["end_date"] = null;
         return $this->eventSaver->submit($data);
