@@ -41,6 +41,17 @@ class RepeatingEvents implements EventsStorage {
         ]);
     }
 
+    private function getEventOccurrencesList($repeatingEvents, $constraint, $countLimit = null) {
+        $events = [];
+        foreach ($repeatingEvents as $event) {
+            $currentRule = $this->rrule->getRule($event);
+            if ($countLimit !== null && $currentRule->getCount() > $num) $currentRule->setCount($num);
+
+            $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
+        }
+        return $events;
+    }
+
     public function getEvents($year, $month): \Iterator {
         $start = new \DateTime($year . '-' . $month, new \DateTimeZone('America/New_York'));
         $end = new \DateTime($year. '-' . $month, new \DateTimeZone('America/New_York'));
@@ -48,14 +59,8 @@ class RepeatingEvents implements EventsStorage {
 
         $constraint = new \Recurr\Transformer\Constraint\BetweenConstraint($start, $end, true);
 
-
         $repeatingEvents = $this->getRecurringFromDatabase($start, $end);
-        $events = [];
-
-        foreach ($repeatingEvents as $event) {
-            $currentRule = $this->rrule->getRule($event);
-            $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
-        }
+        $events = $this->getEventOccurrencesList($repeatingEvents, $constraint);
 
        return new \ArrayIterator($events);
     }
@@ -65,14 +70,7 @@ class RepeatingEvents implements EventsStorage {
         $constraint = new \Recurr\Transformer\Constraint\AfterConstraint($now, true);
         $repeatingEvents = $this->getRecurringFromDatabase($now, $now);
 
-        $events = [];
-
-        foreach ($repeatingEvents as $event) {
-            $currentRule = $this->rrule->getRule($event);
-            if ($currentRule->getCount() > $num) $currentRule->setCount($num);
-
-            $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
-        }
+        $events = $this->getEventOccurrencesList($repeatingEvents, $constraint, $num);
 
         usort($events, function ($event1, $event2) {
             $date1 = new \DateTime($event1->start_date);
