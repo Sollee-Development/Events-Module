@@ -29,19 +29,14 @@ class RepeatingEvents implements EventsStorage {
            \Maphper\Maphper::FIND_NOT => [
                'repeat_id' => null
            ],
-           \Maphper\Maphper::FIND_OR => [
-               \Maphper\Maphper::FIND_LESS => [
-                   'start_date' => $startBefore
-               ],
+           \Maphper\Maphper::FIND_LESS | \Maphper\Maphper::FIND_EXACT => [
                'start_date' => $startBefore
            ],
-           [
-               \Maphper\Maphper::FIND_OR => [
-                   \Maphper\Maphper::FIND_GREATER => [
-                       'end_date' => $endAfter
-                   ],
-                   'end_date' => null
-               ]
+           \Maphper\Maphper::FIND_OR => [
+               \Maphper\Maphper::FIND_GREATER => [
+                   'end_date' => $endAfter
+               ],
+               'end_date' => null
            ]
         ]);
     }

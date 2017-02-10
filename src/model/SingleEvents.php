@@ -19,11 +19,9 @@ class SingleEvents implements EventsStorage {
 
         $single_events = $this->mapper->filter([
             'repeat_id' => null,
-             \Maphper\Maphper::FIND_OR => [
-                 \Maphper\Maphper::FIND_BETWEEN => [
-                     'start_date' => [$start, $end]
-                ]
-             ]
+            \Maphper\Maphper::FIND_BETWEEN => [
+                'start_date' => [$start, $end]
+            ]
          ])->sort('start_date asc');
 
          return $single_events;
@@ -31,10 +29,7 @@ class SingleEvents implements EventsStorage {
 
     public function getUpcomingEvents($num): \Iterator {
         return $this->mapper->filter([
-            \Maphper\Maphper::FIND_OR => [
-                \Maphper\Maphper::FIND_GREATER => [
-                    'start_date' => (new \DateTime())->setTime(0, 0)
-                ],
+            \Maphper\Maphper::FIND_GREATER | \Maphper\Maphper::FIND_EXACT => [
                 'start_date' => (new \DateTime())->setTime(0, 0)
             ]
         ])->sort('start_date asc')->limit($num);
