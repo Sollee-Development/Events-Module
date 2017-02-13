@@ -10,3 +10,4 @@ spl_autoload_register(function($class) {
 		include_once 'tests/deps/' . implode(DIRECTORY_SEPARATOR, $parts) . '.php';
 	}
 });
+require_once "MockEventsStorage.php";

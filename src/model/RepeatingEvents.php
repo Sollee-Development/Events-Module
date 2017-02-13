@@ -53,9 +53,8 @@ class RepeatingEvents implements EventsStorage {
     }
 
     public function getEvents($year, $month): \Iterator {
-        $start = new \DateTime($year . '-' . $month, new \DateTimeZone('America/New_York'));
-        $end = new \DateTime($year. '-' . $month, new \DateTimeZone('America/New_York'));
-        $end->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
+        $start = new \DateTime($year . '-' . $month);
+        $end = (new \DateTime($year. '-' . $month))->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
 
         $constraint = new \Recurr\Transformer\Constraint\BetweenConstraint($start, $end, true);
 

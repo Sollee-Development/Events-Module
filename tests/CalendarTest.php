@@ -176,19 +176,3 @@ class CalendarTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('last', $dataRow['Friday']['events'][1]['day_type']);
     }
 }
-
-class MockEventsStorage implements EventsStorage {
-    private $array;
-
-    public function __construct(array $array) {
-        $this->array = $array;
-    }
-
-    public function getEvents($year, $month): \Iterator {
-        return new ArrayIterator($this->array);
-    }
-
-    public function getUpcomingEvents($num): \Iterator {
-        return new ArrayIterator([]);
-    }
-}
