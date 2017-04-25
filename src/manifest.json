@@ -9,7 +9,12 @@
             "model" : {
                 "instanceOf" : "Events\\Model\\Calendar"
             },
-            "controller" : { "instanceOf" : ["Events\\Controller\\CalendarFilter"]},
+            "controller" : {
+                "instanceOf" : "MVC\\Controller\\FilterFromUrl",
+                "constructParams" : [
+                    ["year", "month"]
+                ]
+            },
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
                 "constructParams" : ["Layouts/layout.xml", "{dir}/view/calendar.tss"]

@@ -94,8 +94,8 @@ class Calendar implements \MVC\Model\Filterable {
     }
 
   	public function getData() {
-		$month = $this->filter['month'];
-		$year = $this->filter['year'];
+		$month = $this->filter['month'] ?? date('Y');
+		$year = $this->filter['year'] ?? date('n');
 
         $date = new \DateTimeImmutable($year . '-' . $month);
 
