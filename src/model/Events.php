@@ -4,34 +4,26 @@ namespace Events\Model;
 
 class Events implements EventsStorage {
     private $eventsStorage;
+    private $sorter;
 
-    public function __construct(EventsStorage ...$eventsStorage) {
+    public function __construct(Sorter $sorter, EventsStorage ...$eventsStorage) {
         $this->eventsStorage = $eventsStorage;
+        $this->sorter = $sorter;
     }
 
-    public function getEvents($year, $month): \Iterator {
+    public function getEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
         $events = new \AppendIterator();
         foreach ($this->eventsStorage as $event)
-            $events->append($event->getEvents($year, $month));
-
-        return $events;
-   }
-
-    public function getUpcomingEvents($num): \Iterator {
-        $events = new \AppendIterator();
-        
-        foreach ($this->eventsStorage as $event)
-            $events->append($event->getUpcomingEvents($num));
+            $events->append($event->getEvents($from, $to, $num));
 
         $events = iterator_to_array($events, false);
+        usort($events, [$this->sorter, 'compareEvents']);
 
-        usort($events, function ($event1, $event2) {
-            $date1 = new \DateTime($event1->start_date);
-            $date2 = new \DateTime($event2->start_date);
-            if ($date1 === $date2) return 0;
-            else return ($date1 < $date2) ? -1 : 1;
-        });
+        return new \ArrayIterator($num ? array_slice($events, 0, $num) : $events);
+    }
 
-        return new \ArrayIterator(array_slice($events, 0, $num));
+    public function getUpcomingEvents($num): \Iterator {
+        $now = new \DateTime('0:0');
+        return $this->getEvents($now, null, $num);
     }
 }

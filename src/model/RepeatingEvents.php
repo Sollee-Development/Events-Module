@@ -4,11 +4,13 @@ class RepeatingEvents implements EventsStorage {
     private $mapper;
     private $rrule;
     private $transformer;
+    private $sorter;
 
-    public function __construct(\Maphper\Maphper $mapper, RRule $rrule, \Recurr\Transformer\ArrayTransformer $transformer) {
+    public function __construct(\Maphper\Maphper $mapper, RRule $rrule, \Recurr\Transformer\ArrayTransformer $transformer, Sorter $sorter) {
         $this->mapper = $mapper;
         $this->rrule = $rrule;
         $this->transformer = $transformer;
+        $this->sorter = $sorter;
     }
 
     private function getOccurrences($constraint, $rule, $event) {
@@ -59,29 +61,13 @@ class RepeatingEvents implements EventsStorage {
         else return null;
     }
 
-    private function retrieveEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
+    public function getEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
         $constraint = $this->getConstraint($to, $from);
         $repeatingEvents = $this->getRecurringFromDatabase($from, $to ?? $from);
         $events = $this->getEventOccurrencesList($repeatingEvents, $constraint, $num);
 
-        usort($events, function ($event1, $event2) {
-            $date1 = new \DateTime($event1->start_date);
-            $date2 = new \DateTime($event2->start_date);
-            if ($date1 === $date2) return 0;
-            else return ($date1 < $date2) ? -1 : 1;
-        });
+        usort($events, [$this->sorter, 'compareEvents']);
 
         return new \ArrayIterator($num ? array_slice($events, 0, $num) : $events);
-    }
-
-    public function getEvents($year, $month): \Iterator {
-        $start = new \DateTime($year . '-' . $month);
-        $end = (new \DateTime($year. '-' . $month))->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
-        return $this->retrieveEvents($start, $end);
-    }
-
-    public function getUpcomingEvents($num): \Iterator {
-        $now = new \DateTime('0:0');
-        return $this->retrieveEvents($now, null, $num);
     }
 }

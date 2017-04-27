@@ -99,7 +99,9 @@ class Calendar implements \MVC\Model\Filterable {
 
         $date = new \DateTimeImmutable($year . '-' . $month);
 
-		$origEvents = $this->model->getEvents($year, $month);
+        $start = new \DateTime($year . '-' . $month);
+        $end = $date->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
+        $origEvents = $this->model->getEvents($start, $end);
 		$events = $this->makeEventsArray($origEvents, $date);
 		$calendar = $this->eventsCalendarReady($events, $date);
 

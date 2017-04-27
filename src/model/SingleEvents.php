@@ -9,8 +9,9 @@ class SingleEvents implements EventsStorage {
         $this->mapper = $mapper;
     }
 
-    private function retrieveEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
+    public function getEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
         $filter = [
+            'repeat_id' => null,
             [],// Start Date
             []// End Date
         ];
@@ -23,19 +24,5 @@ class SingleEvents implements EventsStorage {
             $filter[1][Maphper::FIND_LESS | Maphper::FIND_EXACT] = ['end_date' => $to];
         }
         return $this->mapper->filter([Maphper::FIND_OR => $filter])->sort('start_date asc')->limit($num);
-    }
-
-    public function getEvents($year, $month): \Iterator {
-        $start = new \DateTime($year . '-' . $month);
-        $end = new \DateTime($year. '-' . $month);
-        $end->add(new \DateInterval('P1M'));
-        $end->sub(new \DateInterval('P1D'));
-
-        return $this->retrieveEvents($start, $end);
-    }
-
-    public function getUpcomingEvents($num): \Iterator {
-        $now = new \DateTime('0:0');
-        return $this->retrieveEvents($now, null, $num);
     }
 }
