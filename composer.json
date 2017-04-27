@@ -1,0 +1,11 @@
+{
+    "name" : "solleer/events-module",
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "require" : {
+        "solleer/mvc" : "dev-master",
+        "level-2/maphper" : "dev-master",
+        "simshaun/recurr" : "dev-master"
+    }
+}
