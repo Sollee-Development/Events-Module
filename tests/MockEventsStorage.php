@@ -6,11 +6,7 @@ class MockEventsStorage implements Events\Model\EventsStorage {
         $this->array = $array;
     }
 
-    public function getEvents($year, $month): \Iterator {
-        return new ArrayIterator($this->array);
-    }
-
-    public function getUpcomingEvents($num): \Iterator {
+    public function getEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
         return new ArrayIterator($this->array);
     }
 }

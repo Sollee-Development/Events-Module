@@ -17,10 +17,8 @@ class RepeatingEvents implements EventsStorage {
         $events = [];
         foreach ($this->transformer->transform($rule, $constraint) as $occurrence) {
             $day = $occurrence->getStart();
-            $dayString = $day->format('Y-m-d');
             $event = clone $event;
-            $event->start_date = $dayString;
-            $event->end_date = $dayString;
+            $event->start_date = $event->end_date = $day;
             $events[] = $event;
         }
         return $events;
