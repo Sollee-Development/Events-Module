@@ -1,8 +1,8 @@
 {
-    "dice": "validation_config.json",
-    "maphper" : "maphper.json",
+    "dice": "{dir}/validation_config.json",
+    "maphper" : "{dir}/maphper.json",
     "resources" : {
-        "css" : ["custom.css"],
-        "js" : ["view/form/eventForm.js"]
+        "css" : ["{dir}/custom.css"],
+        "js" : ["{dir}/view/form/eventForm.js"]
     }
 }

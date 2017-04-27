@@ -17,7 +17,7 @@
             },
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "{dir}/view/calendar.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/calendar.tss"]
             },
             "action" : "filter"
         },
@@ -28,7 +28,7 @@
             "controller" : { "instanceOf" : ["MVC\\Controller\\Filter"]},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "{dir}/view/upcoming_page.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/upcoming_page.tss"]
             }
         },
         "event" : {
@@ -41,7 +41,7 @@
             "controller" : { "instanceOf" : ["MVC\\Controller\\Id"]},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "{dir}/view/view_event.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/view_event.tss"]
             },
             "action" : "id"
         },
@@ -52,7 +52,7 @@
             "controller" : { "instanceOf" : ["MVC\\Controller\\Form"]},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "{dir}/view/form/create.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/form/create.tss"]
             },
             "action" : "main"
         },
@@ -63,7 +63,7 @@
             "controller" : { "instanceOf" : ["MVC\\Controller\\Form"]},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "{dir}/view/form/edit.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/form/edit.tss"]
             },
             "action" : "main"
         },
@@ -75,7 +75,7 @@
             "controller" : { "instanceOf" : ["MVC\\Controller\\Form"]},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "{dir}/view/form/delete.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/form/delete.tss"]
             },
             "action" : "main"
         }
