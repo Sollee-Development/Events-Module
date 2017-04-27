@@ -34,8 +34,8 @@ head title, #pageTitle { content: "Events"; }
 
 .c-calendar__event { repeat: iteration(events); }
 
-.c-calendar__event:iteration[event_id=false] { content: "<span>&#160;</span>"; format: html; }
-.c-calendar__event:iteration[event_id=false]:attr(class) { content: ''; }
+.c-calendar__event:iteration[id=false] { content: "<span>&#160;</span>"; format: html; }
+.c-calendar__event:iteration[id=false]:attr(class) { content: ''; }
 
 .c-calendar__event:iteration[day_type]:attr(class) { content: attr(class) + " c-calendar__event--" + iteration(day_type); }
 .c-calendar__event:iteration[start_date=iteration(end_date)]:attr(class) {

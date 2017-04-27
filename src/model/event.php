@@ -20,6 +20,7 @@ class Event implements \MVC\Model\Idable {
     }
 
     public function getRepeatText() {
+        if (empty($this->getData()->repeat)) return "";
         $event = $this->getData();
         return $this->transformer->transform($this->rule->getRule($event));
     }

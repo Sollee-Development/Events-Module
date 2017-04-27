@@ -4,9 +4,9 @@ html:attr(data-user) { content: "all"; }
 
 head title, #pageTitle { content: "Delete Event"; }
 
-input[name="event_id"]:attr(value) { content: data(model.data.event_id); }
+input[name="event_id"]:attr(value) { content: data(model.data.id); }
 
-form:attr(action) { content: attr(action) + data(model.data.event_id); }
+form:attr(action) { content: attr(action) + data(model.data.id); }
 
 html:header[location]:data[model.successful] { content: "events"; }
 html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "events/delete/" + data(model.data.event_id); }
