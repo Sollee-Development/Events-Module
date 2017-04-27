@@ -1,7 +1,7 @@
 {
     "conditions" : {
-        "calendar" : ["(\\d{4})", "(1[0-2]|\\d)"],
-        "event" : ["(\\d)"]
+        "calendar" : ["/(\\d{4})/", "/(1[0-2]|\\d{1})/"],
+        "event" : ["/(\\d+)/"]
     },
     "GET" : {
         "defaultRoute" : "calendar",

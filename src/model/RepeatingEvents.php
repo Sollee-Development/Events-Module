@@ -45,30 +45,23 @@ class RepeatingEvents implements EventsStorage {
         $events = [];
         foreach ($repeatingEvents as $event) {
             $currentRule = $this->rrule->getRule($event);
-            if ($countLimit !== null && $currentRule->getCount() > $num) $currentRule->setCount($num);
+            if ($countLimit && $currentRule->getCount() > $num) $currentRule->setCount($num);
 
             $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
         }
         return $events;
     }
 
-    public function getEvents($year, $month): \Iterator {
-        $start = new \DateTime($year . '-' . $month);
-        $end = (new \DateTime($year. '-' . $month))->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
-
-        $constraint = new \Recurr\Transformer\Constraint\BetweenConstraint($start, $end, true);
-
-        $repeatingEvents = $this->getRecurringFromDatabase($start, $end);
-        $events = $this->getEventOccurrencesList($repeatingEvents, $constraint);
-
-       return new \ArrayIterator($events);
+    private function getConstraint($before = false, $after = false) {
+        if ($before && $after && $after > $before) return new \Recurr\Transformer\Constraint\BetweenConstraint($before, $after, true);
+        else if ($after) return  new \Recurr\Transformer\Constraint\AfterConstraint($after, true);
+        else if ($before) return new \Recurr\Transformer\Constraint\BeforeConstraint($before, true);
+        else return null;
     }
 
-    public function getUpcomingEvents($num): \Iterator {
-        $now = (new \DateTime())->setTime(0, 0);
-        $constraint = new \Recurr\Transformer\Constraint\AfterConstraint($now, true);
-        $repeatingEvents = $this->getRecurringFromDatabase($now, $now);
-
+    private function retrieveEvents(\DateTimeInterface $from = null, \DateTimeInterface $to = null, $num = null): \Iterator {
+        $constraint = $this->getConstraint($to, $from);
+        $repeatingEvents = $this->getRecurringFromDatabase($from, $to ?? $from);
         $events = $this->getEventOccurrencesList($repeatingEvents, $constraint, $num);
 
         usort($events, function ($event1, $event2) {
@@ -78,6 +71,17 @@ class RepeatingEvents implements EventsStorage {
             else return ($date1 < $date2) ? -1 : 1;
         });
 
-        return new \ArrayIterator(array_slice($events, 0, $num));
+        return new \ArrayIterator($num ? array_slice($events, 0, $num) : $events);
+    }
+
+    public function getEvents($year, $month): \Iterator {
+        $start = new \DateTime($year . '-' . $month);
+        $end = (new \DateTime($year. '-' . $month))->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
+        return $this->retrieveEvents($start, $end);
+    }
+
+    public function getUpcomingEvents($num): \Iterator {
+        $now = new \DateTime('0:0');
+        return $this->retrieveEvents($now, null, $num);
     }
 }
