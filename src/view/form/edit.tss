@@ -6,7 +6,7 @@ head title, #pageTitle { content: "Edit Event"; }
 
 #form-title:before { content: "Edit"; }
 
-form { bind: data(model.data); }
+form { bind: data(model.getData()); }
 input[type="text"]:attr(value), input[type="hidden"]:attr(value), textarea { content: data(attr(name)); }
 select { bind: data(attr(name)); }
 select option:attr(selected):[data()=attr(value)] { content: "selected"; }
@@ -15,8 +15,8 @@ input[name="end_time"]:data[model.submitted=false]:attr(value) { content: attr(v
 
 form:attr(action) { content: attr(action) + "edit/" + data(event_id); }
 
-html:header[location]:data[model.successful] { content: "events/" + data(model.data.event_id); }
-html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "events/edit/" + data(model.data.event_id); }
+html:header[location]:data[model.successful] { content: "events/" + data(model.getData().id); }
+html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "events/edit/" + data(model.getData().id); }
 html:message["event/edit"]:data[model.successful=true] { message: "The event was edited"; }
 html:message["event/edit"]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem editing the event", "error"; }
 
