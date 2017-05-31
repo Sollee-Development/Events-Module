@@ -4,12 +4,10 @@ html:attr(data-user) { content: "all"; }
 
 head title, #pageTitle { content: "Edit Event"; }
 
-#form-title:before { content: "Edit"; }
+.c-form__title:before { content: "Edit"; }
 
 form { bind: data(model.getData()); }
-input[type="text"]:attr(value), input[type="hidden"]:attr(value), textarea { content: data(attr(name)); }
-select { bind: data(attr(name)); }
-select option:attr(selected):[data()=attr(value)] { content: "selected"; }
+@import "Layouts/form.tss";
 input[name="start_time"]:data[model.submitted=false]:attr(value),
 input[name="end_time"]:data[model.submitted=false]:attr(value) { content: attr(value); format: date "g:i A"; }
 
@@ -22,4 +20,4 @@ html:message["event/edit"]:data[model.submitted=true]:data[model.successful=fals
 
 [name="recurring"]:data[repeat_id=true]:attr(checked) { content: "checked"; }
 
-@import '/Layouts/layout.tss';
+@import 'Layouts/layout.tss';

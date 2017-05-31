@@ -1,59 +1,49 @@
 <script>$(onReady.forms.event)</script>
-<form method="POST" action="events/">
-    <div class="row">
-        <h2 id="form-title"> Event</h2>
-    </div>
+<form method="POST" action="events/" class="o-layout">
+    <h2 class="c-form__title o-layout__item"> Event</h2>
     <input type="hidden" name="event_id" />
-    <div class="row">
-        <div class="four columns">
-            <label for="name">Name:</label>
-            <input name="name" required="required" type="text" class="u-full-width" />
-        </div>
-        <div class="four columns">
-            <label for="address">Address:</label>
-            <textarea name="address" class="u-full-width"></textarea>
-        </div>
-        <div class="four columns">
+    <div class="o-layout__item u-1/3@tablet">
+        <label for="name">Name:</label>
+        <input name="name" required="required" type="text" class="u-1/1" />
+    </div>
+    <div class="o-layout__item u-1/3@tablet">
+        <label for="address">Address:</label>
+        <textarea name="address" class="u-1/1"></textarea>
+    </div>
+    <div class="o-layout__item u-1/3@tablet">
 
-        </div>
     </div>
-    <div class="row">
-        <div class="three columns">
-            <label for="start_date">Start Date</label>
-            <input type="text" name="start_date" class="u-full-width" required="required"/>
-        </div>
-        <div class="three columns">
-            <label for="start_time">Start Time</label>
-            <input type="text" name="start_time" class="u-full-width timepicker" required="required"/>
-        </div>
-        <div class="three columns">
-            <label for="end_date">End Date</label>
-            <input type="text" name="end_date" class="u-full-width" />
-        </div>
-        <div class="three columns">
-            <label for="end_time">End Time</label>
-            <input type="text" name="end_time" class="u-full-width timepicker" required="required" />
-        </div>
+    <div class="o-layout__item u-1/4@tablet">
+        <label for="start_date">Start Date</label>
+        <input type="text" name="start_date" class="u-1/1" required="required"/>
     </div>
-    <div class="row">
-        <div class="two columns">
-            <label>
-                <input type="checkbox" name="recurring" value="true" />
-                <span class="label-body">Reoccurring</span>
-            </label>
-        </div>
-        <div class="four columns recurringSetting">
-            <label for="repeat[freq]">Freq</label>
-            <select name="repeat[freq]" class="u-full-width" >
-                <option value="weekly">Weekly</option>
-            </select>
-        </div>
-        <div class="four columns recurringSetting">
-            <label for="repeat[interval_num]">Interval</label>
-            <input type="text" name="repeat[interval_num]" class="u-full-width" />
-        </div>
+    <div class="o-layout__item u-1/4@tablet">
+        <label for="start_time">Start Time</label>
+        <input type="text" name="start_time" class="u-1/1 timepicker" required="required"/>
     </div>
-    <div class="row">
-        <button type="submit" class="button-primary">Save</button>
+    <div class="o-layout__item u-1/4@tablet">
+        <label for="end_date">End Date</label>
+        <input type="text" name="end_date" class="u-1/1" />
     </div>
+    <div class="o-layout__item u-1/4@tablet">
+        <label for="end_time">End Time</label>
+        <input type="text" name="end_time" class="u-1/1 timepicker" required="required" />
+    </div>
+    <div class="o-layout__item u-1/5@tablet">
+        <label>
+            <input type="checkbox" name="recurring" value="true" />
+            <span class="label-body">Reoccurring</span>
+        </label>
+    </div>
+    <div class="o-layout__item u-1/3@tablet recurringSetting">
+        <label for="repeat[freq]">Freq</label>
+        <select name="repeat[freq]" class="u-1/1" >
+            <option value="weekly">Weekly</option>
+        </select>
+    </div>
+    <div class="o-layout__item u-1/3@tablet recurringSetting">
+        <label for="repeat[interval_num]">Interval</label>
+        <input type="text" name="repeat[interval_num]" class="u-1/1" />
+    </div>
+    <button type="submit" class="button-primary o-layout__item">Save</button>
 </form>
