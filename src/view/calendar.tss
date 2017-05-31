@@ -10,12 +10,12 @@ head title, #pageTitle { content: "Events"; }
 .c-calendar__title select[name="year"] option {
     bind: data(date.format("Y"));
     // Range is from 3 years back to 3 years ahead
-    repeat: data()-3, data()+3, for;
+    repeat: data()-3, data()+3, loop;
     content: iteration();
 }
 .c-calendar__title select[name="year"] option:attr(value) {
     content: iteration(); }
-.c-calendar__title select[name="year"] option:[iteration()=data(date.format("Y"))]:attr(selected) {
+.c-calendar__title select[name="year"] option:[iteration()=data()]:attr(selected) {
     content: 'selected'; }
 
 .c-calendar__title select[name="month"] option[value=data(date.format("n"))]:attr(selected) {
@@ -47,4 +47,4 @@ head title, #pageTitle { content: "Events"; }
 
 .c-calendar__event.c-calendar__event--first a { content: iteration(name); }
 
-@import '/Layouts/layout.tss';
+@import 'Layouts/layout.tss';

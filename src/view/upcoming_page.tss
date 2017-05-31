@@ -3,6 +3,6 @@ main:before { content: "<h2>Upcoming Events</h2>"; format: html; }
 
 head title, #pageTitle { content: "Upcoming Events"; }
 
-@import "../events/view/event.tss";
-@import "../events/view/upcoming.tss";
-@import '../../Layouts/layout.tss';
+@import "event.tss";
+@import "upcoming.tss";
+@import 'Layouts/layout.tss';

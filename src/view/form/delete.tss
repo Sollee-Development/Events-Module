@@ -13,4 +13,4 @@ html:header[location]:data[model.submitted=true]:data[model.successful=false] { 
 html:message["event/delete"]:data[model.successful=true] { message: "The event was deleted"; }
 html:message["event/delete"]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem deleting the event", "error"; }
 
-@import '../../../../Layouts/layout.tss';
+@import 'Layouts/layout.tss';
