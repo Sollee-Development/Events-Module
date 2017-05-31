@@ -1,12 +1,11 @@
-.event [data-user="all"] a:attr(href) { content: attr(href) + data(event_id); }
+.c-event [data-user="all"] a:attr(href) { content: attr(href) + data(event_id); }
 
-.time { content: data(start_date) + ' ' + data(start_time); format: date "l F jS, Y g:i A - "; }
+.c-event__time { content: data(start_date) + ' ' + data(start_time); format: date "l F jS, Y g:i A - "; }
 
-.event .time:after:data[start_date=data(end_date)] { content: data(end_date) + ' ' + data(end_time); format: date "g:i A"; }
-.event .time:after:data[start_date!=data(end_date)] { content: data(end_date) + ' ' + data(end_time); format: date "l F jS, Y g:i A"; }
+.c-event__time:after:data[start_date!=data(end_date)] { content: data(end_date) + ' ' + data(end_time); format: date "l F jS, Y g:i A"; }
 
-.event .date:data[repeat_id=true] { content: "Repeats " + root(model.getRepeatText()); }
+.c-event__date:data[repeat_id=true] { content: "Repeats " + root(model.getRepeatText()); }
 
-.event .name { content: data(name); }
-.event .description:data[description=false] { display: none; }
-.event .description-text { content: data(description); format: nl2br; }
+.c-event__name { content: data(name); }
+.c-event .desc:data[description=false] { display: none; }
+.c-event__desc-text { content: data(description); format: nl2br; }

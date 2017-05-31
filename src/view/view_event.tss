@@ -2,9 +2,7 @@ main { content: template('event.xml', '.event'); }
 
 head title, #pageTitle { content: "Event"; }
 
-.event { bind: data(model.getData()); }
-.event h3.name { display: none; }
+.c-event { bind: data(model.getData()); }
 
 @import "event.tss";
-
-@import '../../../Layouts/layout.tss';
+@import 'Layouts/layout.tss';

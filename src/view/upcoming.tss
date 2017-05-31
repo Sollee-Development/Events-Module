@@ -1,3 +1,4 @@
-.event { repeat: data(getUpcomingEvents(3)); bind: iteration(); }
-.event .description, .event h2.name, .event [data-user="all"] { display: none; }
+.c-event { repeat: data(getUpcomingEvents(3)); bind: iteration(); }
+.c-event__desc, .c-event [data-user="all"] { display: none; }
+.c-event__name:attr(class) { content: attr(class) + " .u-h2"; }
 #upcoming-events:data[getUpcomingEvents().item(0)=false] { content: "<p>There are no upcoming events currently.</p>"; format: html; }

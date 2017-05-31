@@ -1,6 +1,5 @@
-﻿<div class="event">
-    <h2 class="name">Event Title</h2>
-    <h3 class="name">Event Title</h3>
+﻿<div class="c-event">
+    <h3 class="c-event__name">Event Title</h3>
     <div data-user="all">
         <a href="events/edit/" title="Edit Event" class="button icon-button">
             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
@@ -9,9 +8,9 @@
             <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
         </a>
     </div>
-    <div class="date"><strong>Date: </strong><span class="time"></span></div>
-    <div class="description">
+    <div class="c-event__date"><strong>Date: </strong><span class="c-event__time"></span></div>
+    <div class="c-event__desc">
         <div><strong>Description:</strong></div>
-        <div class="description-text">1111 Fake Rd.</div>
+        <div class="c-event__desc-text">1111 Fake Rd.</div>
     </div>
 </div>
