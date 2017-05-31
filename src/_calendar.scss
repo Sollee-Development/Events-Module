@@ -1,11 +1,11 @@
 /******** CALENDAR code ********/
 
-$event-bg-color: #4F2980;
+$event-bg-color: #4F2980 !default;
 
 .c-calendar__container {
     overflow-x: auto;
 }
-.c-calendar__title form, .c-calendar__title div:nth-child(1) {
+.c-calendar__title {
     text-align: center;
 }
     .calendar__day-head {
