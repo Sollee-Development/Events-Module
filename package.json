@@ -1,0 +1,8 @@
+{
+    "name" : "events-module",
+    "version" : "1.0.0",
+    "dependencies" : {
+        "timepicker" : "1.11.9"
+    },
+    "private" : true
+}
