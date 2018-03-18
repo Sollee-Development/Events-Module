@@ -2,7 +2,7 @@
     "dice": "{dir}/validation_config.json",
     "maphper" : "{dir}/maphper.json",
     "resources" : {
-        "css" : ["{dir}/custom.css"],
-        "js" : ["{dir}/view/form/eventForm.js"]
+        "css" : ["node_modules/jquery-timepicker/jquery.timepicker.css"],
+        "js" : ["node_modules/jquery-timepicker/jquery.timepicker.js", "{dir}/view/form/eventForm.js"]
     }
 }

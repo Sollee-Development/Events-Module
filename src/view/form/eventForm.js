@@ -16,8 +16,10 @@ onReady.form.event = function () {
         }
     });
     $(".timepicker").timepicker({
-        timeFormat: 'g:i A',
-        step: 15
+        timeFormat: 'h:mm p',
+        interval: 15,
+        dropdown: true,
+        scrollbar: true
     });
     $("form").validate({
         rules: {
