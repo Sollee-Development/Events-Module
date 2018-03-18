@@ -2,6 +2,6 @@
     <h2>Are you sure you want to delete the event?</h2>
     <input type="hidden" name="id" />
     <div class="row">
-        <button type="submit" class="button-primary">Delete</button>
+        <button type="submit" class="c-btn c-btn--primary">Delete</button>
     </div>
 </form>

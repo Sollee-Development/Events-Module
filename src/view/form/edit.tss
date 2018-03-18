@@ -9,7 +9,10 @@ head title, #pageTitle { content: "Edit Event"; }
 form { bind: data(model.getData()); }
 @import "Layouts/form.tss";
 input[name="start_time"]:data[model.submitted=false]:attr(value),
-input[name="end_time"]:data[model.submitted=false]:attr(value) { content: attr(value); format: date "g:i A"; }
+input[name="end_time"]:data[model.submitted=false]:attr(value) { content: data(attr(name)); format: date "g:i A"; }
+
+input[name="start_date"]:data[model.submitted=false]:attr(value),
+input[name="end_date"]:data[model.submitted=false]:attr(value) { content: data(attr(name)); format: date "Y-m-d"; }
 
 form:attr(action) { content: attr(action) + "edit/" + data(event_id); }
 

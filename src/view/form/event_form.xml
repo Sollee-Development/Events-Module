@@ -1,17 +1,18 @@
 <script>$(onReady.form.event)</script>
 <form method="POST" action="events/" class="o-layout">
     <h2 class="c-form__title o-layout__item"> Event</h2>
-    <input type="hidden" name="event_id" />
+    <input type="hidden" name="id" class="tss-form-data-fill" />
     <div class="o-layout__item u-1/3@tablet">
         <label for="name">Name:</label>
-        <input name="name" required="required" type="text" class="u-1/1" />
+        <input name="name" required="required" type="text" class="u-1/1 tss-form-data-fill" />
     </div>
     <div class="o-layout__item u-1/3@tablet">
-        <label for="address">Address:</label>
-        <textarea name="address" class="u-1/1"></textarea>
+        <label for="location">Location:</label>
+        <textarea name="location" class="u-1/1 tss-form-data-fill"></textarea>
     </div>
     <div class="o-layout__item u-1/3@tablet">
-
+        <label for="description">Description:</label>
+        <textarea name="description" class="u-1/1 tss-form-data-fill"></textarea>
     </div>
     <div class="o-layout__item u-1/4@tablet">
         <label for="start_date">Start Date</label>
@@ -37,13 +38,15 @@
     </div>
     <div class="o-layout__item u-1/3@tablet recurringSetting">
         <label for="repeat[freq]">Freq</label>
-        <select name="repeat[freq]" class="u-1/1" >
+        <select name="repeat[freq]" class="u-1/1 tss-form-data-select" >
             <option value="weekly">Weekly</option>
         </select>
     </div>
     <div class="o-layout__item u-1/3@tablet recurringSetting">
         <label for="repeat[interval_num]">Interval</label>
-        <input type="text" name="repeat[interval_num]" class="u-1/1" />
+        <input type="text" name="repeat[interval_num]" class="u-1/1 tss-form-data-fill" />
     </div>
-    <button type="submit" class="button-primary o-layout__item">Save</button>
+    <div class="o-layout__item">
+        <button type="submit" class="c-btn c-btn--primary">Save</button>
+    </div>
 </form>

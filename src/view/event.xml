@@ -9,6 +9,10 @@
         </a>
     </div>
     <div class="c-event__date"><strong>Date: </strong><span class="c-event__time"></span></div>
+    <div class="c-event__loc">
+        <div><strong>Location:</strong></div>
+        <div class="c-event__loc-text">1111 Fake Rd.</div>
+    </div>
     <div class="c-event__desc">
         <div><strong>Description:</strong></div>
         <div class="c-event__desc-text">1111 Fake Rd.</div>

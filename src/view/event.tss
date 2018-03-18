@@ -11,3 +11,6 @@
 
 .c-event__desc:data[description=false] { display: none; }
 .c-event__desc-text { content: data(description); format: nl2br; }
+
+.c-event__loc:data[location=false] { display: none; }
+.c-event__loc-text { content: data(location); format: nl2br; }
