@@ -34,17 +34,17 @@ class Calendar implements \MVC\Model\Filterable {
 		$events = array();
 
 		foreach ($origEvents as $row) {
-            $endDay = new \DateTime($row->end_date . ' ' . $row->end_time);
-            $startDay = new \DateTimeImmutable($row->start_date);
+            $endDay = (clone $row->end_date)->modify($row->end_time);
+            $startDay = $row->start_date;
 
-            if ($endDay < $this->dayStartTime->modify($row->end_date))
+            if ($endDay < $this->dayStartTime->modify($row->end_date->format('Y-m-d')))
                 $endDay->modify('-1 day');
 
             $row_posit = isset($events[$startDay->format('j')]) ?
                             $this->getNextAvailiblePosition($events[$startDay->format('j')]) : 0;
 
             $endDay->setTime(0, 0);
-            $loopDay = new \DateTime($row->start_date);
+            $loopDay = clone $startDay;
             while ($loopDay <= $endDay) {
                 $event_row = clone $row;
                 if ($loopDay == $startDay) $event_row->day_type = 'first';
@@ -94,8 +94,8 @@ class Calendar implements \MVC\Model\Filterable {
     }
 
   	public function getData() {
-		$month = $this->filter['month'] ?? date('Y');
-		$year = $this->filter['year'] ?? date('n');
+		$month = $this->filter['month'] ?? date('n');
+		$year = $this->filter['year'] ?? date('Y');
 
         $date = new \DateTimeImmutable($year . '-' . $month);
 
