@@ -25,7 +25,7 @@
             "model" : {
                 "instanceOf" : "Events\\Model\\Events"
             },
-            "controller" : { "instanceOf" : ["MVC\\Controller\\Filter"]},
+            "controller" : { "instanceOf" : "MVC\\Controller\\Filter"},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
                 "constructParams" : ["Layouts/layout.xml", "./view/upcoming_page.tss"]
@@ -38,7 +38,7 @@
                     "MVC\\Model\\Id" : { "instance" : "$event_id_model" }
                 }
             },
-            "controller" : { "instanceOf" : ["MVC\\Controller\\Id"]},
+            "controller" : { "instanceOf" : "MVC\\Controller\\Id"},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
                 "constructParams" : ["Layouts/layout.xml", "./view/view_event.tss"]
@@ -49,7 +49,7 @@
             "model" : {
                 "instanceOf" : "Events\\Model\\Form"
             },
-            "controller" : { "instanceOf" : ["MVC\\Controller\\Form"]},
+            "controller" : { "instanceOf" : "MVC\\Controller\\Form"},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
                 "constructParams" : ["Layouts/layout.xml", "./view/form/create.tss"]
@@ -60,7 +60,7 @@
             "model" : {
                 "instanceOf" : "Events\\Model\\Form"
             },
-            "controller" : { "instanceOf" : ["MVC\\Controller\\Form"]},
+            "controller" : { "instanceOf" : "MVC\\Controller\\Form"},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
                 "constructParams" : ["Layouts/layout.xml", "./view/form/edit.tss"]
@@ -69,10 +69,9 @@
         },
         "delete" : {
             "model" : {
-                "instanceOf" : "MVC\\Model\\Form\\Delete",
-                "substitutions" : {"ArrayAccess" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+                "instanceOf" : "$event_deleter"
             },
-            "controller" : { "instanceOf" : ["MVC\\Controller\\Form"]},
+            "controller" : { "instanceOf" : "MVC\\Controller\\Form"},
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
                 "constructParams" : ["Layouts/layout.xml", "./view/form/delete.tss"]
@@ -83,15 +82,15 @@
     "POST" : {
         "create" : {
             "inherit" : "GET",
-            "defaultAction" : "submit"
+            "action" : "submit"
         },
         "edit" : {
             "inherit" : "GET",
-            "defaultAction" : "submit"
+            "action" : "submit"
         },
         "delete" : {
             "inherit" : "GET",
-            "defaultAction" : "submit"
+            "action" : "submit"
         }
     }
 }
