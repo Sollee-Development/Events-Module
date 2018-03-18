@@ -1,3 +1,4 @@
+
 html:header[location]:data[request.get("month")=true] { content: "events/" + data(request.get("year")) + "/" + data(request.get("month")); }
 
 main { content: template('calendar.xml'); bind: data(model.getData()); }
@@ -5,24 +6,24 @@ main { content: template('calendar.xml'); bind: data(model.getData()); }
 head title, #pageTitle { content: "Events"; }
 
 /******* Calendar Header ********/
-.c-calendar__title h2 { content: data(date); format: date "F Y"; }
+.c-calendar-title__month h2 { content: data(date); format: date "F Y"; }
 
-.c-calendar__title select[name="year"] option {
+.c-calendar-title__controls select[name="year"] option {
     bind: data(date.format("Y"));
     // Range is from 3 years back to 3 years ahead
     repeat: data()-3, data()+3, loop;
     content: iteration();
 }
-.c-calendar__title select[name="year"] option:attr(value) {
+.c-calendar-title__controls select[name="year"] option:attr(value) {
     content: iteration(); }
-.c-calendar__title select[name="year"] option:[iteration()=data()]:attr(selected) {
+.c-calendar-title__controls select[name="year"] option:[iteration()=data()]:attr(selected) {
     content: 'selected'; }
 
-.c-calendar__title select[name="month"] option[value=data(date.format("n"))]:attr(selected) {
+.c-calendar-title__controls select[name="month"] option[value=data(date.format("n"))]:attr(selected) {
     content: 'selected'; }
 
-.c-calendar__controls a:nth-child(1):attr(href) { content: attr(href), data(date).modify('-1 month').format("Y/n"); }
-.c-calendar__controls a:nth-child(2):attr(href) { content: attr(href), data(date).modify('+1 month').format("Y/n"); }
+.c-calendar-title__controls a:nth-child(1):attr(href) { content: attr(href), data(date).modify('-1 month').format("Y/n"); }
+.c-calendar-title__controls a:nth-child(2):attr(href) { content: attr(href), data(date).modify('+1 month').format("Y/n"); }
 
 /********** Calendar Body ***********/
 .c-calendar__table { bind: data(calendar); }
@@ -38,7 +39,7 @@ head title, #pageTitle { content: "Events"; }
 .c-calendar__event:iteration[id=false]:attr(class) { content: ''; }
 
 .c-calendar__event:iteration[day_type]:attr(class) { content: attr(class) + " c-calendar__event--" + iteration(day_type); }
-.c-calendar__event:iteration[start_date=iteration(end_date)]:attr(class) {
+.c-calendar__event:iteration[start_date = iteration(end_date)]:attr(class) {
     content: attr(class) + " c-calendar__event--last";
 }
 .c-calendar__event a:not(".c-calendar__event--first a") { content: "<span>&#160;</span>"; format: html; }

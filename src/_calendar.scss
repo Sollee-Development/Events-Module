@@ -1,13 +1,12 @@
 /******** CALENDAR code ********/
 
 $event-bg-color: #4F2980 !default;
+$calendar-curved-event: false !default;
 
-.c-calendar__container {
+.c-calendar {
     overflow-x: auto;
 }
-.c-calendar__title {
-    text-align: center;
-}
+
     .calendar__day-head {
         width: 14%;
         min-width: 8rem;
@@ -19,9 +18,11 @@ $event-bg-color: #4F2980 !default;
     }
         .c-calendar__day-number {
             font-weight: 500;
+            padding: 2px;
             padding-left: 15px;
+            margin-bottom: 3px;
         }
-        .c-calendar__event { // Turn this into mixin
+        .c-calendar__event {
             background-color: $event-bg-color;
             color: white;
             padding:  {
@@ -41,9 +42,21 @@ $event-bg-color: #4F2980 !default;
         .c-calendar__event--first {
             margin-left: 15px;
             padding-left: 4px;
+            @if ($calendar-curved-event) {
+                border: {
+                    top-left-radius: 4px;
+                    bottom-left-radius: 4px;
+                }
+            }
         }
         .c-calendar__event--last {
             margin-right: 15px;
+            @if ($calendar-curved-event) {
+                border: {
+                    top-right-radius: 4px;
+                    bottom-right-radius: 4px;
+                }
+            }
         }
         .c-calendar__event:not(.c-calendar__event--first) {
             a {
@@ -51,3 +64,30 @@ $event-bg-color: #4F2980 !default;
                 padding-left: 0;
             }
         }
+
+/*
+ 1. Allow vertical-align
+ */
+.c-calendar-title {
+    text-align: center;
+    margin-bottom: $inuit-global-spacing-unit-small;
+
+    @include mq($from: tablet) {
+        display: table; /* [1] */
+        table-layout: fixed;
+        width: 100%;
+    }
+}
+
+    .c-calendar-title__item {
+        @include mq($from: tablet) {
+            display: table-cell; /* [1] */
+            vertical-align: middle; /* [1] */
+        }
+    }
+
+
+/* Timepicker list fix */
+.ui-timepicker-viewport {
+    list-style: none;
+}

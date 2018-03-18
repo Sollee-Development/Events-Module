@@ -1,10 +1,10 @@
-<div class="c-calendar">
-    <div class="o-layout c-calendar__title">
-        <div class="o-layout__item u-1/2@tablet">
+<div>
+    <div class="o-layout c-calendar-title">
+        <div class="c-calendar-title__month c-calendar-title__item o-layout__item u-1/2@tablet">
             <h2 class="title">November 2015</h2>
-            <a class='button' data-user="all" href='events/create'>Create Event <i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+            <a class='c-btn c-btn--secondary u-margin-bottom-small' data-user="all" href='events/create'>Create Event <i class="far fa-calendar-plus"></i></a>
         </div><!-- style="padding-right: 30px; float: left; margin: 0.5ex 0;" -->
-        <form class="c-calendar__controls o-layout__item u-1/2@tablet" method="get">
+        <form class="c-calendar-title__controls c-calendar-title__item o-layout__item u-1/2@tablet" method="get">
             <select name="month">
               <option value="1">January</option>
               <option value="2">February</option>
@@ -22,12 +22,12 @@
             <select name="year">
               <option value="2015">2015</option>
             </select>
-            <input name="submit" type="submit" value="Go" />
+            <input name="submit" type="submit" value="Go" class="c-btn c-btn--secondary c-btn--inline" />
             <br />
             <a href="events/" class="previous">&lt;&lt; Previous Month</a> | <a href="events/" class="next">Next Month &gt;&gt;</a>
         </form>
     </div>
-    <div class="row c-calendar__container">
+    <div class="c-calendar">
         <table class="c-calendar__table u-full-width">
           <thead >
             <tr class="c-calendar__row-head">
