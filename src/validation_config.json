@@ -18,13 +18,18 @@
     },
     "Recurr\\Transformer\\TextTransformer" : {
         "substitutions" : {
-            "Recurr\\Transformer\\TranslatorInterface" : { "instance" : "Recurr\\Transformer\\Translator", "params" : ["en"]}
+            "Recurr\\Transformer\\TranslatorInterface" : { "instance" : "Recurr\\Transformer\\Translator", "params" : ["en", "en"]}
         }
+    },
+    "Recurr\\Transformer\\Translator" : {
+        "constructParams" : ["en"]
+    },
+    "Recurr\\Rule" : {
+        "constructParams" : ["", ""]
     },
     "Events\\Model\\Form" : {
         "constructParams" : [
-            {"instance" : "$event_saver"},
-            {"instance" : "$event_repeat_saver"}
+            {"instance" : "$event_saver"}
         ]
     },
     "$event_id_model" : {
@@ -38,6 +43,10 @@
             {"instance" : "$events_validate_event"}
         ]
     },
+    "$event_deleter" : {
+        "instanceOf" : "MVC\\Model\\Form\\Delete",
+        "constructParams" : [{"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}, "id"]
+    },
     "$event_repeat_saver" : {
         "instanceOf" : "MVC\\Model\\Form\\Save",
         "constructParams" : [
@@ -46,10 +55,12 @@
         ]
     },
     "$events_validate_id" : {
-        "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
-        "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\IntVal"}
-        ]]]]
+        "instanceOf" : "Respect\\Validation\\Rules\\When",
+        "constructParams" : [
+            {"instance" : "Respect\\Validation\\Rules\\NotEmpty"},
+            {"instance" : "Respect\\Validation\\Rules\\IntVal"},
+            {"instance" : "Respect\\Validation\\Rules\\AlwaysValid" }
+        ]
     },
     "$events_validate_name" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
@@ -62,7 +73,7 @@
     "$events_validate_location" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\Alnum", "params" : ["\n"]},
+            {"instance" : "Respect\\Validation\\Rules\\Alnum", "params" : ["\n,"]},
             {"instance" : "Respect\\Validation\\Rules\\Length", "params" : [1, 300]}
         ]]]]
     },
@@ -106,6 +117,9 @@
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
                 ["location", {"instance" : "Respect\\Validation\\Rules\\Optional",
                     "params" : [{"instance" : "$events_validate_description"}]}, false]},
+            {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
+                ["description", {"instance" : "Respect\\Validation\\Rules\\Optional",
+                    "params" : [{"instance" : "$events_validate_description"}]}, false]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_date", {"instance" : "$events_validate_date"}]},
             {"instance" : "Respect\\Validation\\Rules\\When", "params" : [
                 {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"instance" : "$events_validate_id"}]},
@@ -115,6 +129,11 @@
                     {"instance" : "$events_validate_date_or1" },
                     {"instance" : "$events_validate_date_or2" }
                 ]}
+            ]},
+            {"instance" : "Respect\\Validation\\Rules\\When", "params" : [
+                {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]},
+                {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_time", "max", "end_time"]},
+                {"instance" : "Respect\\Validation\\Rules\\AlwaysValid" }
             ]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_time", {"instance" : "$events_validate_time"}]},
             {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_time", {"instance" : "$events_validate_time"}]},
