@@ -53,7 +53,7 @@ class RepeatingEvents implements EventsStorage {
     }
 
     private function getConstraint($before = false, $after = false) {
-        if ($before && $after && $after > $before) return new \Recurr\Transformer\Constraint\BetweenConstraint($before, $after, true);
+        if ($before && $after && ($after < $before)) return new \Recurr\Transformer\Constraint\BetweenConstraint($after, $before, true);
         else if ($after) return  new \Recurr\Transformer\Constraint\AfterConstraint($after, true);
         else if ($before) return new \Recurr\Transformer\Constraint\BeforeConstraint($before, true);
         else return null;
