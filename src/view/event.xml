@@ -1,11 +1,11 @@
 ﻿<div class="c-event">
     <h3 class="c-event__name">Event Title</h3>
-    <div data-user="all">
-        <a href="events/edit/" title="Edit Event" class="button icon-button">
-            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+    <div data-user="all" class="u-margin-bottom">
+        <a href="events/edit/" title="Edit Event" class="c-btn c-btn--secondary c-btn--icon-btn">
+            <i class="fas fa-pencil-alt fa-lg fa-fw" aria-hidden="true"></i>
         </a>
-        <a href="events/delete/" title="Delete Event" class="button icon-button">
-            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+        <a href="events/delete/" title="Delete Event" class="c-btn c-btn--secondary c-btn--icon-btn">
+            <i class="fas fa-trash fa-lg fa-fw" aria-hidden="true"></i>
         </a>
     </div>
     <div class="c-event__date"><strong>Date: </strong><span class="c-event__time"></span></div>

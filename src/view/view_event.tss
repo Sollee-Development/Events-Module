@@ -1,4 +1,4 @@
-main { content: template('event.xml', '.event'); }
+main { content: template('event.xml', '.c-event'); }
 
 head title, #pageTitle { content: "Event"; }
 
