@@ -11,8 +11,8 @@ class Form implements \MVC\Model\Form {
     }
 
     public function main($data) {
-        $this->eventSaver->main($data);
-        $this->data = $this->eventSaver->data;
+        $this->saver->main($data);
+        $this->data = $this->saver->getData();
     }
 
     public function submit($data) {
@@ -22,12 +22,19 @@ class Form implements \MVC\Model\Form {
             $obj = \DateTime::createFromFormat("g:i A", $value);
             if ($obj && $obj->format("g:i A") == $value) $data[$key] = $obj->format("H:i");
         }
+        if (!isset($data["recurring"])) unset($data['repeat']);
         unset($data["recurring"]);
+
         if (empty($data["end_date"])) $data["end_date"] = null;
-        return $this->eventSaver->submit($data);
+
+        return $this->saver->submit($data);
     }
 
     public function success() {
         $this->successful = true;
+    }
+
+    public function getData() {
+        return $this->saver->getData();
     }
 }
