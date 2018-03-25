@@ -34,7 +34,7 @@
     },
     "$event_id_model" : {
         "instanceOf" : "MVC\\Model\\Id",
-        "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+        "substitutions" : {"ArrayAccess" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
     },
     "$event_saver" : {
         "instanceOf" : "MVC\\Model\\Form\\Save",
