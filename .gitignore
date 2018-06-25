@@ -1,1 +1,3 @@
-tests/deps
+
+vendor
+composer.lock

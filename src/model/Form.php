@@ -4,7 +4,6 @@ class Form implements \MVC\Model\Form {
     private $saver;
     public $submitted = false;
     public $sucessful = false;
-    public $data;
 
     public function __construct(\MVC\Model\Form\Save $saver) {
         $this->saver = $saver;
@@ -12,7 +11,6 @@ class Form implements \MVC\Model\Form {
 
     public function main($data) {
         $this->saver->main($data);
-        $this->data = $this->saver->getData();
     }
 
     public function submit($data) {

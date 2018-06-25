@@ -1,4 +1,7 @@
 <?php
+
+require_once "../vender/autoload.php";
+
 //Autoloader for User classes
 spl_autoload_register(function($class) {
 	$parts = explode('\\', ltrim($class, '\\'));

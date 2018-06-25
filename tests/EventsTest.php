@@ -1,7 +1,7 @@
 <?php
 use Events\Model\{Events, Sorter};
 
-class EventsTest extends PHPUnit_Framework_TestCase {
+class EventsTest extends PHPUnit\Framework\TestCase {
     private function getMonthDates($year, $month) {
         $start = new \DateTime($year . '-' . $month);
         $end = (new \DateTime($year . '-' . $month))->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));

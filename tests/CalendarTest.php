@@ -1,7 +1,7 @@
 <?php
 use Events\Model\{EventsStorage, Calendar};
 
-class CalendarTest extends PHPUnit_Framework_TestCase {
+class CalendarTest extends PHPUnit\Framework\TestCase {
 
     private function getData($events) {
         $storage = new MockEventsStorage($events);
