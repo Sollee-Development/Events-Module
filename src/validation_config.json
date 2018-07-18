@@ -1,24 +1,24 @@
 {
     "Events\\Model\\SingleEvents" : {
-        "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+        "substitutions" : {"Maphper\\Maphper" : {"Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
     },
     "Events\\Model\\RepeatingEvents" : {
-        "substitutions" : {"Maphper\\Maphper" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+        "substitutions" : {"Maphper\\Maphper" : {"Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
     },
     "Events\\Model\\Events" : {
         "constructParams" : [
-            {"instance" : "Events\\Model\\SingleEvents"},
-            {"instance" : "Events\\Model\\RepeatingEvents"}
+            {"Dice::INSTANCE" : "Events\\Model\\SingleEvents"},
+            {"Dice::INSTANCE" : "Events\\Model\\RepeatingEvents"}
         ]
     },
     "Events\\Model\\Calendar" : {
         "substitutions" : {
-            "Events\\Model\\EventsStorage" : {"instance" : "Events\\Model\\Events"}
+            "Events\\Model\\EventsStorage" : {"Dice::INSTANCE" : "Events\\Model\\Events"}
         }
     },
     "Recurr\\Transformer\\TextTransformer" : {
         "substitutions" : {
-            "Recurr\\Transformer\\TranslatorInterface" : { "instance" : "Recurr\\Transformer\\Translator", "params" : ["en", "en"]}
+            "Recurr\\Transformer\\TranslatorInterface" : { "Dice::INSTANCE" : "Recurr\\Transformer\\Translator", "params" : ["en", "en"]}
         }
     },
     "Recurr\\Transformer\\Translator" : {
@@ -29,52 +29,52 @@
     },
     "Events\\Model\\Form" : {
         "constructParams" : [
-            {"instance" : "$event_saver"}
+            {"Dice::INSTANCE" : "$event_saver"}
         ]
     },
     "$event_id_model" : {
         "instanceOf" : "MVC\\Model\\Id",
-        "substitutions" : {"ArrayAccess" : {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
+        "substitutions" : {"ArrayAccess" : {"Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}}
     },
     "$event_saver" : {
         "instanceOf" : "MVC\\Model\\Form\\Save",
         "constructParams" : [
-            {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]},
-            {"instance" : "$events_validate_event"}
+            {"Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]},
+            {"Dice::INSTANCE" : "$events_validate_event"}
         ]
     },
     "$event_deleter" : {
         "instanceOf" : "MVC\\Model\\Form\\Delete",
-        "constructParams" : [{"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}, "id"]
+        "constructParams" : [{"Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["events"]}, "id"]
     },
     "$event_repeat_saver" : {
         "instanceOf" : "MVC\\Model\\Form\\Save",
         "constructParams" : [
-            {"instance" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["repeat_events"]},
-            {"instance" : "$events_validate_repeat"}
+            {"Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"], "params" : ["repeat_events"]},
+            {"Dice::INSTANCE" : "$events_validate_repeat"}
         ]
     },
     "$events_validate_id" : {
         "instanceOf" : "Respect\\Validation\\Rules\\When",
         "constructParams" : [
-            {"instance" : "Respect\\Validation\\Rules\\NotEmpty"},
-            {"instance" : "Respect\\Validation\\Rules\\IntVal"},
-            {"instance" : "Respect\\Validation\\Rules\\AlwaysValid" }
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\NotEmpty"},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\IntVal"},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\AlwaysValid" }
         ]
     },
     "$events_validate_name" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\Alnum"},
-            {"instance" : "Respect\\Validation\\Rules\\Length", "params" : [1, 50]},
-            {"instance" : "Respect\\Validation\\Rules\\NotEmpty"}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Alnum"},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Length", "params" : [1, 50]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\NotEmpty"}
         ]]]]
     },
     "$events_validate_location" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\Alnum", "params" : ["\n,"]},
-            {"instance" : "Respect\\Validation\\Rules\\Length", "params" : [1, 300]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Alnum", "params" : ["\n,"]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Length", "params" : [1, 300]}
         ]]]]
     },
     "$events_validate_description" : {
@@ -86,67 +86,67 @@
     "$events_validate_date" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\Date"}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Date"}
         ]]]]
     },
     "$events_validate_date_or1" : {
         "instanceOf" : "Respect\\Validation\\Rules\\OneOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["end_date", "min", "start_date"]},
-            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["end_date", "min", "start_date"]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]}
         ]]]]
     },
     "$events_validate_date_or2" : {
         "instanceOf" : "Respect\\Validation\\Rules\\OneOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "max", "end_date"]},
-            {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "max", "end_date"]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]}
         ]]]]
     },
     "$events_validate_time" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\Date", "params" : ["H:i"]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Date", "params" : ["H:i"]}
         ]]]]
     },
     "$events_validate_event" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "call" : [["addRules", [[
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["id", {"instance" : "$events_validate_id"}, false]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["name", {"instance" : "$events_validate_name"}]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
-                ["location", {"instance" : "Respect\\Validation\\Rules\\Optional",
-                    "params" : [{"instance" : "$events_validate_description"}]}, false]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" :
-                ["description", {"instance" : "Respect\\Validation\\Rules\\Optional",
-                    "params" : [{"instance" : "$events_validate_description"}]}, false]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_date", {"instance" : "$events_validate_date"}]},
-            {"instance" : "Respect\\Validation\\Rules\\When", "params" : [
-                {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"instance" : "$events_validate_id"}]},
-                {"instance" : "Respect\\Validation\\Rules\\AlwaysValid" },
-                {"instance" : "Respect\\Validation\\Rules\\AllOf", "params" : [
-                    {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_date", {"instance" : "$events_validate_date"}]},
-                    {"instance" : "$events_validate_date_or1" },
-                    {"instance" : "$events_validate_date_or2" }
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["id", {"Dice::INSTANCE" : "$events_validate_id"}, false]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["name", {"Dice::INSTANCE" : "$events_validate_name"}]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" :
+                ["location", {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Optional",
+                    "params" : [{"Dice::INSTANCE" : "$events_validate_description"}]}, false]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" :
+                ["description", {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Optional",
+                    "params" : [{"Dice::INSTANCE" : "$events_validate_description"}]}, false]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["start_date", {"Dice::INSTANCE" : "$events_validate_date"}]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\When", "params" : [
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"Dice::INSTANCE" : "$events_validate_id"}]},
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\AlwaysValid" },
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\AllOf", "params" : [
+                    {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["end_date", {"Dice::INSTANCE" : "$events_validate_date"}]},
+                    {"Dice::INSTANCE" : "$events_validate_date_or1" },
+                    {"Dice::INSTANCE" : "$events_validate_date_or2" }
                 ]}
             ]},
-            {"instance" : "Respect\\Validation\\Rules\\When", "params" : [
-                {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]},
-                {"instance" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_time", "max", "end_time"]},
-                {"instance" : "Respect\\Validation\\Rules\\AlwaysValid" }
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\When", "params" : [
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_date", "equals", "end_date"]},
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\KeyValue", "params" : ["start_time", "max", "end_time"]},
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\AlwaysValid" }
             ]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["start_time", {"instance" : "$events_validate_time"}]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["end_time", {"instance" : "$events_validate_time"}]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"instance" : "$events_validate_id"}, false]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["start_time", {"Dice::INSTANCE" : "$events_validate_time"}]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["end_time", {"Dice::INSTANCE" : "$events_validate_time"}]},
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["repeat_id", {"Dice::INSTANCE" : "$events_validate_id"}, false]}
         ]]]]
     },
     "$events_validate_repeat" : {
         "instanceOf" : "Respect\\Validation\\Rules\\AllOf",
         "constructParams" : [
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["freq",
-                {"instance" : "Respect\\Validation\\Rules\\In", "params" : [["weekly"]]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["freq",
+                {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\In", "params" : [["weekly"]]}
             ]},
-            {"instance" : "Respect\\Validation\\Rules\\Key", "params" : ["interval_num", {"instance" : "$events_validate_id"}]}
+            {"Dice::INSTANCE" : "Respect\\Validation\\Rules\\Key", "params" : ["interval_num", {"Dice::INSTANCE" : "$events_validate_id"}]}
         ]
     }
 }

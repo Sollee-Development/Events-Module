@@ -6,6 +6,9 @@
     "require" : {
         "solleer/mvc" : "^1.0",
         "level-2/maphper" : "^0.9",
+        "solleer/maphper-loader" : "^2.0.0",
+        "solleer/transphporm-messages": "^1.0",
+        "respect/validation": "^1.1",
         "simshaun/recurr" : "^3.0"
     }
 }
