@@ -17,7 +17,7 @@
             },
             "view" : {
                 "instanceOf" : "Transphporm\\Builder",
-                "constructParams" : ["Layouts/layout.xml", "./view/calendar.tss"]
+                "constructParams" : ["Layouts/layout.xml", "./view/calendar-page.tss"]
             },
             "action" : "filter"
         },

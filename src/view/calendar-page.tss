@@ -1,0 +1,10 @@
+
+html:header[location]:data[request.get("month")=true] { content: "events/" + data(request.get("year")) + "/" + data(request.get("month")); }
+
+main { content: template('calendar.xml', '', 'calendar.tss'); bind: data(model.getData()); }
+
+head title, #pageTitle { content: "Events"; }
+
+
+
+@import 'Layouts/layout.tss';
