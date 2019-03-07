@@ -22,6 +22,7 @@ class SingleEvents implements EventsStorage {
             $filter[0][Maphper::FIND_LESS | Maphper::FIND_EXACT] = ['start_date' => $to];
             $filter[1][Maphper::FIND_LESS | Maphper::FIND_EXACT] = ['end_date' => $to];
         }
+        if (!$from && !$to) $filter = [];
         
         return $this->mapper->filter(['repeat_id' => null, Maphper::FIND_OR => $filter])->sort('start_date asc')->limit($num)->getIterator();
     }
