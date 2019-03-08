@@ -1,7 +1,7 @@
 
 html:header[location]:data[request.get("month")=true] { content: "events/" + data(request.get("year")) + "/" + data(request.get("month")); }
 
-main { content: template('calendar.xml', '', 'calendar.tss'); bind: data(model.getData()); }
+main { bind: data(model.getData()); content: template('calendar.xml', '', 'calendar.tss'); }
 
 head title, #pageTitle { content: "Events"; }
 
