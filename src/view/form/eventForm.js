@@ -1,4 +1,4 @@
-onReady.form.event = function () {
+eventForm = function () {
     $("input[name='start_date']").datepicker({
         changeMonth: true,
         changeYear: true,

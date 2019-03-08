@@ -1,4 +1,4 @@
-<script>$(onReady.form.event)</script>
+<script>$(eventForm)</script>
 <form method="POST" action="events/" class="o-layout">
     <h2 class="c-form__title o-layout__item"> Event</h2>
     <input type="hidden" name="id" class="tss-form-data-fill" />
