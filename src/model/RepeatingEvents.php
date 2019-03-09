@@ -45,7 +45,7 @@ class RepeatingEvents implements EventsStorage {
         $events = [];
         foreach ($repeatingEvents as $event) {
             $currentRule = $this->rrule->getRule($event);
-            if ($countLimit && $currentRule->getCount() > $num) $currentRule->setCount($num);
+            if ($countLimit && $currentRule->getCount() > $countLimit) $currentRule->setCount($countLimit);
 
             $events = array_merge($events, $this->getOccurrences($constraint, $currentRule, $event));
         }
